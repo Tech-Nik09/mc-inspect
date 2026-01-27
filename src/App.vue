@@ -1,5 +1,21 @@
 <script setup></script>
 
-<template></template>
+<template>
+  <nav>
+    <router-link :to="{ name: 'home' }">Home</router-link>
+    <router-link :to="{ name: 'players' }">Players</router-link>
+    <router-link :to="{ name: 'players', params: { playerName: 'examplename' } }"
+      >Example player</router-link
+    >
+  </nav>
+  <main>
+    <router-view></router-view>
+  </main>
+</template>
 
-<style scoped></style>
+<style scoped>
+nav {
+  display: flex;
+  flex-direction: column;
+}
+</style>
