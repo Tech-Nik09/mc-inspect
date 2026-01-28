@@ -1,7 +1,7 @@
 {
   "name": "mc-inspect",
   "version": "0.0.0",
-  "license": "MIT"
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
