@@ -10,9 +10,19 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/players/:playerName?',
-      name: 'players',
-      component: () => import('../views/PlayersView.vue'),
+      path: '/players',
+      children: [
+        {
+          path: '',
+          name: 'players',
+          component: () => import('../views/PlayersView.vue'),
+        },
+        {
+          path: ':playerName',
+          name: 'playerInfo',
+          component: () => import('../views/PlayerInfoView.vue'),
+        },
+      ],
     },
     {
       path: '/:pathMatch(.*)*',
