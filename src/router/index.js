@@ -14,7 +14,13 @@ const router = createRouter({
       name: 'players',
       component: () => import('../views/PlayersView.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: () => import('../views/NotFound.vue'),
+    },
   ],
+  sensitive: true,
 });
 
 export default router;
