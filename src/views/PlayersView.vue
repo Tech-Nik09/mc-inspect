@@ -1,10 +1,10 @@
 <script setup>
-import { usePlayersStore } from '@/stores/players';
+import { useCurrentPlayerStore } from '@/stores/currentPlayer';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const player = usePlayersStore();
+const currentPlayer = useCurrentPlayerStore();
 </script>
 
 <template>
@@ -13,7 +13,12 @@ const player = usePlayersStore();
   <p>Route path: {{ $route.path }}</p>
   <p>Route params: {{ $route.params }}</p>
 
-  <input type="text" v-model="player.playerName" @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: player.playerName } })" />
+  <input
+    type="text"
+    v-model="currentPlayer.playerName"
+    @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: currentPlayer.playerName } })"
+  />
+  <p v-if="currentPlayer.playerError">Error: {{ currentPlayer.playerError }}</p>
 </template>
 
 <style scoped></style>
