@@ -1,12 +1,13 @@
 <script setup>
-import { usePlayersStore } from '@/stores/players';
+import { useCurrentPlayerStore } from '@/stores/currentPlayer';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
 
-const player = usePlayersStore();
+const currentPlayer = useCurrentPlayerStore();
+const playerNameCriteria = /^[a-zA-Z0-9_]{3,16}$/;
 const playerData = ref(null);
 const playerLoading = ref(false);
 let playerLoadingTimeout;
@@ -19,13 +20,21 @@ async function useFetch() {
       playerLoading.value = true;
     }, 200);
 
-    const playerResponse = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${route.params.playerName}`);
+    currentPlayer.playerName = route.params.playerName;
+    if (!playerNameCriteria.test(currentPlayer.playerName)) {
+      throw new Error(`Invalid player name "${currentPlayer.playerName}"`);
+    }
+
+    const playerResponse = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${currentPlayer.playerName}`);
     if (!playerResponse.ok) {
-      throw new Error('Could not find player');
+      throw new Error(`Could not find player "${currentPlayer.playerName}"`);
     }
     playerData.value = await playerResponse.json();
-    player.playerName = null;
+
+    currentPlayer.playerName = null;
+    currentPlayer.playerError = null;
   } catch (error) {
+    currentPlayer.playerError = error;
     router.push({ name: 'players' });
     console.error(error);
   } finally {
@@ -41,7 +50,11 @@ async function useFetch() {
   <p>Route path: {{ $route.path }}</p>
   <p>Route params: {{ $route.params }}</p>
 
-  <input type="text" v-model="player.playerName" @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: player.playerName } })" />
+  <input
+    type="text"
+    v-model="currentPlayer.playerName"
+    @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: currentPlayer.playerName } })"
+  />
 
   <h2>Fetched player data</h2>
   <template v-if="playerData">
