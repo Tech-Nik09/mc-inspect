@@ -1,13 +1,17 @@
 <script setup>
-import { useCurrentPlayerStore } from '@/stores/currentPlayer';
+import { usePlayerQueryStore } from '@/stores/playerQuery';
+import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
 
-const currentPlayer = useCurrentPlayerStore();
+const playerQuery = usePlayerQueryStore();
+const { queryInput, queryError } = storeToRefs(playerQuery);
+
 const playerNameCriteria = /^[a-zA-Z0-9_]{3,16}$/;
+
 const playerData = ref(null);
 const playerLoading = ref(false);
 let playerLoadingTimeout;
@@ -20,21 +24,21 @@ async function useFetch() {
       playerLoading.value = true;
     }, 200);
 
-    currentPlayer.playerName = route.params.playerName;
-    if (!playerNameCriteria.test(currentPlayer.playerName)) {
-      throw new Error(`Invalid player name "${currentPlayer.playerName}"`);
+    queryInput.value = route.params.playerName;
+    if (!playerNameCriteria.test(queryInput.value)) {
+      throw new Error(`Invalid player name "${queryInput.value}"`);
     }
 
-    const playerResponse = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${currentPlayer.playerName}`);
+    const playerResponse = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${queryInput.value}`);
     if (!playerResponse.ok) {
-      throw new Error(`Could not find player "${currentPlayer.playerName}"`);
+      throw new Error(`Could not find player "${queryInput.value}"`);
     }
     playerData.value = await playerResponse.json();
 
-    currentPlayer.playerName = null;
-    currentPlayer.playerError = null;
+    queryInput.value = null;
+    queryError.value = null;
   } catch (error) {
-    currentPlayer.playerError = error;
+    queryError.value = error;
     router.push({ name: 'players' });
     console.error(error);
   } finally {
@@ -52,8 +56,9 @@ async function useFetch() {
 
   <input
     type="text"
-    v-model="currentPlayer.playerName"
-    @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: currentPlayer.playerName } })"
+    :disabled="playerLoading"
+    v-model="queryInput"
+    @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: queryInput } })"
   />
 
   <h2>Fetched player data</h2>
