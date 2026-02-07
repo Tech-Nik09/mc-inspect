@@ -1,12 +1,8 @@
 <script setup>
-import { usePlayerQueryStore } from '@/stores/playerQuery';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { usePlayerStore } from '@/stores/player';
+import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 
-const router = useRouter();
-
-const playerQuery = usePlayerQueryStore();
-const { queryInput, queryError } = storeToRefs(playerQuery);
+const store = usePlayerStore();
 </script>
 
 <template>
@@ -15,8 +11,9 @@ const { queryInput, queryError } = storeToRefs(playerQuery);
   <p>Route path: {{ $route.path }}</p>
   <p>Route params: {{ $route.params }}</p>
 
-  <input type="text" v-model="queryInput" @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: queryInput } })" />
-  <p v-if="queryError">{{ queryError }}</p>
+  <PlayerSearchBar />
+  <p v-if="store.isLoading">Loading</p>
+  <p v-if="store.error">{{ store.error }}</p>
 </template>
 
 <style scoped></style>
