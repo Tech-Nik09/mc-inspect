@@ -13,7 +13,7 @@ const playerStore = usePlayerStore();
 
   <PlayerSearchBar />
   <p v-if="playerStore.isLoading">Loading</p>
-  <p v-if="playerStore.error">{{ playerStore.error }}</p>
+  <p v-else-if="playerStore.error">{{ playerStore.error }}</p>
 </template>
 
 <style scoped></style>
