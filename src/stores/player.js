@@ -13,6 +13,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   async function fetchPlayer() {
+    query.value = query.value.trim();
     let name = toValue(query);
     let loadingTimeout;
 
