@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { usePlayerStore } from '@/stores/player';
 import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
@@ -21,13 +22,24 @@ const router = createRouter({
           path: ':playerName',
           name: 'playerInfo',
           component: () => import('../views/PlayerInfoView.vue'),
+          beforeEnter: async (to) => {
+            const playerStore = usePlayerStore();
+
+            if (to.params.playerName === playerStore.data?.name) {
+              return true;
+            }
+
+            playerStore.query = to.params.playerName;
+            const newRoute = await playerStore.fetchPlayer();
+            return newRoute;
+          },
         },
       ],
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
-      component: () => import('../views/NotFound.vue'),
+      component: () => import('../views/NotFoundView.vue'),
     },
   ],
   sensitive: true,

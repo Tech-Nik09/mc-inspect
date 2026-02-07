@@ -1,10 +1,8 @@
 <script setup>
-import { useCurrentPlayerStore } from '@/stores/currentPlayer';
-import { useRouter } from 'vue-router';
+import { usePlayerStore } from '@/stores/player';
+import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 
-const router = useRouter();
-
-const currentPlayer = useCurrentPlayerStore();
+const playerStore = usePlayerStore();
 </script>
 
 <template>
@@ -13,12 +11,9 @@ const currentPlayer = useCurrentPlayerStore();
   <p>Route path: {{ $route.path }}</p>
   <p>Route params: {{ $route.params }}</p>
 
-  <input
-    type="text"
-    v-model="currentPlayer.playerName"
-    @keyup.enter="router.push({ name: 'playerInfo', params: { playerName: currentPlayer.playerName } })"
-  />
-  <p v-if="currentPlayer.playerError">Error: {{ currentPlayer.playerError }}</p>
+  <PlayerSearchBar />
+  <p v-if="playerStore.isLoading">Loading</p>
+  <p v-if="playerStore.error">{{ playerStore.error }}</p>
 </template>
 
 <style scoped></style>
