@@ -23,20 +23,15 @@ const router = createRouter({
           name: 'playerInfo',
           component: () => import('../views/PlayerInfoView.vue'),
           beforeEnter: async (to) => {
-            const store = usePlayerStore();
+            const playerStore = usePlayerStore();
 
-            if (to.params.playerName === store.data?.name) {
+            if (to.params.playerName === playerStore.data?.name) {
               return true;
             }
 
-            store.query = to.params.playerName;
-            await store.fetchPlayer();
-
-            if (!store.error) {
-              return { name: 'playerInfo', params: { playerName: store.data.name } };
-            }
-
-            return { name: 'players' };
+            playerStore.query = to.params.playerName;
+            const newRoute = await playerStore.fetchPlayer();
+            return newRoute;
           },
         },
       ],

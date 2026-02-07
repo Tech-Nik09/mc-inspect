@@ -4,22 +4,17 @@ import { usePlayerStore } from '@/stores/player';
 
 const router = useRouter();
 
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 
 async function onQuery() {
-  await store.fetchPlayer();
-
-  if (store.error) {
-    router.push({ name: 'players' });
-  } else {
-    router.push({ name: 'playerInfo', params: { playerName: store.data.name } });
-  }
+  const newRoute = await playerStore.fetchPlayer();
+  router.push(newRoute);
 }
 </script>
 
 <template>
-  <input type="text" :disabled="store.isLoading" v-model="store.query" @keyup.enter="onQuery" />
-  <button :disabled="store.isLoading" @click="onQuery">{{ store.isLoading ? 'loading' : 'Search' }}</button>
+  <input type="text" :disabled="playerStore.isLoading" v-model="playerStore.query" @keyup.enter="onQuery" />
+  <button :disabled="playerStore.isLoading" @click="onQuery">{{ playerStore.isLoading ? 'loading' : 'Search' }}</button>
 </template>
 
 <style scoped></style>

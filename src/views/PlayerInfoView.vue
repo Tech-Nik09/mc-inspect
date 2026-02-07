@@ -2,7 +2,7 @@
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 </script>
 
 <template>
@@ -14,19 +14,19 @@ const store = usePlayerStore();
   <PlayerSearchBar />
 
   <h2>Fetched player data</h2>
-  <template v-if="store.data">
-    <p>name: {{ store.data.name }}</p>
-    <p>uuid: {{ store.data.uuid }}</p>
-    <p>skinId: {{ store.data.skinId }}</p>
-    <p>playerModel: {{ store.data.playerModel }}</p>
-    <p>skinUrl: {{ store.data.skinUrl }}</p>
-    <p v-if="store.data.capeUrl">capeUrl: {{ store.data.capeUrl }}</p>
+  <template v-if="playerStore.data">
+    <p>name: {{ playerStore.data.name }}</p>
+    <p>uuid: {{ playerStore.data.uuid }}</p>
+    <p>skinId: {{ playerStore.data.skinId }}</p>
+    <p>playerModel: {{ playerStore.data.playerModel }}</p>
+    <p>skinUrl: {{ playerStore.data.skinUrl }}</p>
+    <p v-if="playerStore.data.capeUrl">capeUrl: {{ playerStore.data.capeUrl }}</p>
 
-    <img :src="store.data.skinUrl" alt="" />
-    <img v-if="store.data.capeUrl" :src="store.data.capeUrl" alt="" />
-    <img :src="`https://vzge.me/full/192/${store.data.skinId}.webp?${store.data.playerModel}&no=shadow`" alt="" />
+    <img :src="playerStore.data.skinUrl" alt="" />
+    <img v-if="playerStore.data.capeUrl" :src="playerStore.data.capeUrl" alt="" />
+    <img :src="`https://vzge.me/full/192/${playerStore.data.skinId}.webp?${playerStore.data.playerModel}&no=shadow`" alt="" />
   </template>
-  <p v-if="store.isLoading">Loading</p>
+  <p v-if="playerStore.isLoading">Loading</p>
 </template>
 
 <style scoped></style>

@@ -33,11 +33,15 @@ export const usePlayerStore = defineStore('player', () => {
       data.value = await res.json();
       error.value = null;
       query.value = null;
+
+      return { name: 'playerInfo', params: { playerName: data.value.name } };
     } catch (err) {
+      console.error(err);
+
       data.value = null;
       error.value = err;
 
-      console.error(err);
+      return { name: 'players' };
     } finally {
       clearTimeout(loadingTimeout);
       isLoading.value = false;

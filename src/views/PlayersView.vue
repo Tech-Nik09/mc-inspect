@@ -2,7 +2,7 @@
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 
-const store = usePlayerStore();
+const playerStore = usePlayerStore();
 </script>
 
 <template>
@@ -12,8 +12,8 @@ const store = usePlayerStore();
   <p>Route params: {{ $route.params }}</p>
 
   <PlayerSearchBar />
-  <p v-if="store.isLoading">Loading</p>
-  <p v-if="store.error">{{ store.error }}</p>
+  <p v-if="playerStore.isLoading">Loading</p>
+  <p v-if="playerStore.error">{{ playerStore.error }}</p>
 </template>
 
 <style scoped></style>
