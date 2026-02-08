@@ -2,10 +2,12 @@
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import { useClipboard } from '@/composables/copyToClipboard';
+import { useFileDownload } from '@/composables/downloadFileFromURL';
 
 const playerStore = usePlayerStore();
 
 const { isCopied, copyToClipboard } = useClipboard();
+const { isDownloading, downloadFileFromURL } = useFileDownload();
 </script>
 
 <template>
@@ -18,6 +20,16 @@ const { isCopied, copyToClipboard } = useClipboard();
 
   <div>
     <button @click="copyToClipboard()">{{ isCopied ? 'Copied to clipboard...' : 'Copy URL to clipboard' }}</button>
+    <button :disabled="isDownloading" @click="downloadFileFromURL(playerStore.data.skinUrl, `${playerStore.data.name}_skin.png`)">
+      {{ isDownloading ? 'Downloading...' : 'Download Skin' }}
+    </button>
+    <button
+      v-if="playerStore.data.capeUrl"
+      :disabled="isDownloading"
+      @click="downloadFileFromURL(playerStore.data.capeUrl, `${playerStore.data.name}_cape.png`)"
+    >
+      {{ isDownloading ? 'Downloading...' : 'Download Cape' }}
+    </button>
   </div>
 
   <h2>Fetched player data</h2>
