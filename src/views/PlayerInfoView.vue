@@ -1,8 +1,11 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
+import { useClipboard } from '@/composables/copyToClipboard';
 
 const playerStore = usePlayerStore();
+
+const { isCopied, copyToClipboard } = useClipboard();
 </script>
 
 <template>
@@ -12,6 +15,10 @@ const playerStore = usePlayerStore();
   <p>Route params: {{ $route.params }}</p>
 
   <PlayerSearchBar />
+
+  <div>
+    <button @click="copyToClipboard()">{{ isCopied ? 'Copied to clipboard...' : 'Copy URL to clipboard' }}</button>
+  </div>
 
   <h2>Fetched player data</h2>
   <template v-if="playerStore.data">
