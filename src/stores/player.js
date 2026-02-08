@@ -15,10 +15,10 @@ export const usePlayerStore = defineStore('player', () => {
   async function fetchPlayer() {
     query.value = query.value.trim();
     let name = toValue(query);
-    let loadingTimeout;
+    let isLoadingTimeout;
 
     try {
-      loadingTimeout = setTimeout(() => {
+      isLoadingTimeout = setTimeout(() => {
         isLoading.value = true;
       }, 200);
 
@@ -44,7 +44,7 @@ export const usePlayerStore = defineStore('player', () => {
 
       return { name: 'players' };
     } finally {
-      clearTimeout(loadingTimeout);
+      clearTimeout(isLoadingTimeout);
       isLoading.value = false;
     }
   }
