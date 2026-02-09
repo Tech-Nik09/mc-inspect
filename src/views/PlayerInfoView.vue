@@ -1,15 +1,16 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
-import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
-import { useClipboard } from '@/composables/copyToClipboard';
 import { useFileDownload } from '@/composables/downloadFileFromURL';
+import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
+import CopyButton from '@/components/CopyButton.vue';
 import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
 
-const { isCopied, copyToClipboard } = useClipboard();
 const { isDownloading, downloadFileFromURL } = useFileDownload();
+
+const currentLocation = window.location.href;
 </script>
 
 <template>
@@ -21,7 +22,7 @@ const { isDownloading, downloadFileFromURL } = useFileDownload();
   <PlayerSearchBar />
 
   <div>
-    <button @click="copyToClipboard()">{{ isCopied ? 'Copied to clipboard...' : 'Copy URL to clipboard' }}</button>
+    <CopyButton :text="currentLocation" label="shareable link" />
     <button :disabled="isDownloading" @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)">
       {{ isDownloading ? 'Downloading...' : 'Download Skin' }}
     </button>
@@ -32,18 +33,23 @@ const { isDownloading, downloadFileFromURL } = useFileDownload();
 
   <h2>Fetched player data</h2>
   <p>name: {{ data.name }}</p>
-  <button @click="copyToClipboard(data.name)">Copy name</button>
+  <CopyButton :text="data.name" label="Name" />
+
   <p>uuid: {{ data.uuid }}</p>
-  <button @click="copyToClipboard(data.uuid)">Copy uuid</button>
+  <CopyButton :text="data.uuid" label="UUID" />
+
   <p>skinId: {{ data.skinId }}</p>
-  <button @click="copyToClipboard(data.skinId)">Copy skinId</button>
+  <CopyButton :text="data.skinId" label="Skin ID" />
+
   <p>playerModel: {{ data.playerModel }}</p>
-  <button @click="copyToClipboard(data.playerModel)">Copy playerModel</button>
+  <CopyButton :text="data.playerModel" label="Model" />
+
   <p>skinUrl: {{ data.skinUrl }}</p>
-  <button @click="copyToClipboard(data.skinUrl)">Copy skinUrl</button>
+  <CopyButton :text="data.skinUrl" label="Skin URL" />
+
   <template v-if="data.capeUrl">
     <p>capeUrl: {{ data.capeUrl }}</p>
-    <button @click="copyToClipboard(data.capeUrl)">Copy caleUrl</button>
+    <CopyButton :text="data.capeUrl" label="Cape URL" />
   </template>
 
   <div>
