@@ -18,13 +18,17 @@ export const usePlayerStore = defineStore('player', () => {
     let isLoadingTimeout;
 
     try {
-      isLoadingTimeout = setTimeout(() => {
-        isLoading.value = true;
-      }, 200);
+      if (!name) {
+        throw new Error('Playername cannot be empty');
+      }
 
       if (!validateName(name)) {
         throw new Error(`Invalid player name "${name}"`);
       }
+
+      isLoadingTimeout = setTimeout(() => {
+        isLoading.value = true;
+      }, 200);
 
       const res = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${name}`);
       if (!res.ok) {
@@ -33,7 +37,7 @@ export const usePlayerStore = defineStore('player', () => {
 
       data.value = await res.json();
       error.value = null;
-      query.value = null;
+      query.value = '';
 
       return { name: 'playerInfo', params: { playerName: data.value.name } };
     } catch (err) {
