@@ -3,6 +3,7 @@ import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
+import SkinView from '@/components/SkinView.vue';
 import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
@@ -51,6 +52,8 @@ const currentLocation = window.location.href;
     <img v-if="data.capeUrl" :src="data.capeUrl" alt="" />
     <img :src="`https://vzge.me/face/64/${data.skinId}.webp?${data.playerModel}&no=shadow`" alt="" />
   </div>
+
+  <SkinView />
 
   <p v-if="isLoading">Loading</p>
 </template>
