@@ -1,8 +1,10 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
+import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
+const { isLoading, error } = storeToRefs(playerStore);
 </script>
 
 <template>
@@ -12,8 +14,8 @@ const playerStore = usePlayerStore();
   <p>Route params: {{ $route.params }}</p>
 
   <PlayerSearchBar />
-  <p v-if="playerStore.isLoading">Loading</p>
-  <p v-else-if="playerStore.error">{{ playerStore.error }}</p>
+  <p v-if="isLoading">Loading</p>
+  <p v-else-if="error">{{ error }}</p>
 </template>
 
 <style scoped></style>

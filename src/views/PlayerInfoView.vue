@@ -1,13 +1,15 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
-import { useClipboard } from '@/composables/copyToClipboard';
-import { useFileDownload } from '@/composables/downloadFileFromURL';
+import CopyButton from '@/components/CopyButton.vue';
+import DownloadButton from '@/components/DownloadButton.vue';
+import SkinView from '@/components/SkinView.vue';
+import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
+const { isLoading, data } = storeToRefs(playerStore);
 
-const { isCopied, copyToClipboard } = useClipboard();
-const { isDownloading, downloadFileFromURL } = useFileDownload();
+const currentLocation = window.location.href;
 </script>
 
 <template>
@@ -19,33 +21,41 @@ const { isDownloading, downloadFileFromURL } = useFileDownload();
   <PlayerSearchBar />
 
   <div>
-    <button @click="copyToClipboard()">{{ isCopied ? 'Copied to clipboard...' : 'Copy URL to clipboard' }}</button>
-    <button :disabled="isDownloading" @click="downloadFileFromURL(playerStore.data.skinUrl, `${playerStore.data.name}_skin.png`)">
-      {{ isDownloading ? 'Downloading...' : 'Download Skin' }}
-    </button>
-    <button
-      v-if="playerStore.data.capeUrl"
-      :disabled="isDownloading"
-      @click="downloadFileFromURL(playerStore.data.capeUrl, `${playerStore.data.name}_cape.png`)"
-    >
-      {{ isDownloading ? 'Downloading...' : 'Download Cape' }}
-    </button>
+    <CopyButton :text="currentLocation" label="shareable link" />
+    <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
+    <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
   </div>
 
   <h2>Fetched player data</h2>
-  <template v-if="playerStore.data">
-    <p>name: {{ playerStore.data.name }}</p>
-    <p>uuid: {{ playerStore.data.uuid }}</p>
-    <p>skinId: {{ playerStore.data.skinId }}</p>
-    <p>playerModel: {{ playerStore.data.playerModel }}</p>
-    <p>skinUrl: {{ playerStore.data.skinUrl }}</p>
-    <p v-if="playerStore.data.capeUrl">capeUrl: {{ playerStore.data.capeUrl }}</p>
+  <p>name: {{ data.name }}</p>
+  <CopyButton :text="data.name" label="Name" />
 
-    <img :src="playerStore.data.skinUrl" alt="" />
-    <img v-if="playerStore.data.capeUrl" :src="playerStore.data.capeUrl" alt="" />
-    <img :src="`https://vzge.me/full/192/${playerStore.data.skinId}.webp?${playerStore.data.playerModel}&no=shadow`" alt="" />
+  <p>uuid: {{ data.uuid }}</p>
+  <CopyButton :text="data.uuid" label="UUID" />
+
+  <p>skinId: {{ data.skinId }}</p>
+  <CopyButton :text="data.skinId" label="Skin ID" />
+
+  <p>playerModel: {{ data.playerModel }}</p>
+  <CopyButton :text="data.playerModel" label="Model" />
+
+  <p>skinUrl: {{ data.skinUrl }}</p>
+  <CopyButton :text="data.skinUrl" label="Skin URL" />
+
+  <template v-if="data.capeUrl">
+    <p>capeUrl: {{ data.capeUrl }}</p>
+    <CopyButton :text="data.capeUrl" label="Cape URL" />
   </template>
-  <p v-if="playerStore.isLoading">Loading</p>
+
+  <div>
+    <img :src="data.skinUrl" alt="" />
+    <img v-if="data.capeUrl" :src="data.capeUrl" alt="" />
+    <img :src="`https://vzge.me/face/64/${data.skinId}.webp?${data.playerModel}&no=shadow`" alt="" />
+  </div>
+
+  <SkinView />
+
+  <p v-if="isLoading">Loading</p>
 </template>
 
 <style scoped></style>
