@@ -8,6 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: { title: 'Home' },
       component: HomeView,
     },
     {
@@ -16,6 +17,7 @@ const router = createRouter({
         {
           path: '',
           name: 'players',
+          meta: { title: 'Skinviewer' },
           component: () => import('../views/PlayersView.vue'),
         },
         {
@@ -39,10 +41,22 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
+      meta: { title: 'Not Found' },
       component: () => import('../views/NotFoundView.vue'),
     },
   ],
   sensitive: true,
+});
+
+router.afterEach((to) => {
+  const baseTitle = 'mc-inspect';
+  let routeTitle = to.meta.title;
+
+  if (to.name === 'playerInfo') {
+    routeTitle = to.params.playerName;
+  }
+
+  document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
 });
 
 export default router;
