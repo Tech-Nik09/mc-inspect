@@ -12,14 +12,14 @@ let skinViewer = null;
 
 const equipmentType = ref('cape');
 const equipmentOptions = {
-  noEquipment: { value: 'none', label: 'No equipment' },
+  noEquipment: { value: null, label: 'No equipment' },
   cape: { value: 'cape', label: 'Cape' },
   elytra: { value: 'elytra', label: 'Elytra' },
 };
 
 const animationType = ref('idle');
 const animationOptions = {
-  noAnimation: { value: 'none', label: 'No animation' },
+  noAnimation: { value: null, label: 'No animation' },
   idle: { value: 'idle', label: 'Idle' },
   walking: { value: 'walking', label: 'Walk' },
   crouching: { value: 'crouching', label: 'Crouch' },
@@ -40,7 +40,7 @@ onMounted(() => {
   watch(
     [data, equipmentType],
     () => {
-      loadSkin();
+      setSkin();
     },
     { immediate: true },
   );
@@ -48,7 +48,7 @@ onMounted(() => {
   watch(
     animationType,
     () => {
-      loadAnimation();
+      setAnimation();
     },
     { immediate: true },
   );
@@ -58,52 +58,42 @@ onBeforeUnmount(() => {
   skinViewer.dispose();
 });
 
-function loadSkin() {
+function setSkin() {
   skinViewer.loadSkin(data.value.skinUrl);
+
+  if (data.value.capeUrl && equipmentType.value) {
+    skinViewer.loadCape(data.value.capeUrl, { backEquipment: equipmentType.value });
+  } else {
+    skinViewer.loadCape(null);
+  }
 
   if (data.value.name === 'deadmau5') {
     skinViewer.loadEars(data.value.skinUrl, { textureType: 'skin' });
   } else {
     skinViewer.loadEars(null);
   }
-
-  switch (equipmentType.value) {
-    case 'none':
-      skinViewer.loadCape(null);
-      break;
-    case 'cape':
-      skinViewer.loadCape(data.value.capeUrl);
-      break;
-    case 'elytra':
-      skinViewer.loadCape(data.value.capeUrl, { backEquipment: 'elytra' });
-      break;
-  }
-  if (!data.value.capeUrl) {
-    skinViewer.loadCape(null);
-  }
 }
 
-function loadAnimation() {
+function setAnimation() {
+  let newAnimation = null;
   switch (animationType.value) {
-    case 'none':
-      skinViewer.animation = null;
-      break;
     case 'idle':
-      skinViewer.animation = new IdleAnimation();
+      newAnimation = new IdleAnimation();
       break;
     case 'walking':
-      skinViewer.animation = new WalkingAnimation();
+      newAnimation = new WalkingAnimation();
       break;
     case 'crouching':
-      // TODO: rename anim variable
-      const anim = new CrouchAnimation();
-      anim.runOnce = true;
-      skinViewer.animation = anim;
+      newAnimation = new CrouchAnimation();
+      newAnimation.runOnce = true;
       break;
     case 'flying':
-      skinViewer.animation = new FlyingAnimation();
+      newAnimation = new FlyingAnimation();
       break;
+    default:
+      newAnimation = null;
   }
+  skinViewer.animation = newAnimation;
 }
 </script>
 
