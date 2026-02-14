@@ -3,8 +3,9 @@ import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
-import SkinView from '@/components/SkinView.vue';
+import { defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
+const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
