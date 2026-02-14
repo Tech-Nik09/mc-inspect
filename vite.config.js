@@ -9,8 +9,17 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  build: {
+    chunkSizeWarningLimit: 512,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-skinview': ['skinview3d'],
+        },
+      },
+    },
+  },
   plugins: [vue(), vueDevTools()],
-
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
