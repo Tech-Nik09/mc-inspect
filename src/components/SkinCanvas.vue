@@ -10,6 +10,7 @@ const { isLoading, data } = storeToRefs(playerStore);
 const canvas = useTemplateRef('skin_container');
 let skinViewer = null;
 
+const hasCape = ref(false);
 const equipmentType = ref('cape');
 const equipmentOptions = {
   noEquipment: { value: null, label: 'No equipment' },
@@ -61,7 +62,9 @@ onBeforeUnmount(() => {
 function setSkin() {
   skinViewer.loadSkin(data.value.skinUrl);
 
-  if (data.value.capeUrl && equipmentType.value) {
+  hasCape.value = data.value.capeUrl ? true : false;
+
+  if (hasCape.value && equipmentType.value) {
     skinViewer.loadCape(data.value.capeUrl, { backEquipment: equipmentType.value });
   } else {
     skinViewer.loadCape(null);
@@ -100,21 +103,23 @@ function setAnimation() {
 <template>
   <canvas ref="skin_container"></canvas>
 
-  <div v-for="(option, key) in equipmentOptions" :key="key">
-    <label>
+  <div v-if="hasCape">
+    <label v-for="(option, key) in equipmentOptions" :key="key">
       <input type="radio" :value="option.value" v-model="equipmentType" />
       {{ option.label }}
     </label>
-  </div>
-  <p>Equipment type: {{ equipmentType }}</p>
 
-  <div v-for="(option, key) in animationOptions" :key="key">
-    <label>
+    <p>Equipment type: {{ equipmentType }}</p>
+  </div>
+
+  <div>
+    <label v-for="(option, key) in animationOptions" :key="key">
       <input type="radio" :value="option.value" v-model="animationType" />
       {{ option.label }}
     </label>
+
+    <p>Animation type: {{ animationType }}</p>
   </div>
-  <p>Animation type: {{ animationType }}</p>
 </template>
 
 <style scoped>
