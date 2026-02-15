@@ -1,6 +1,6 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
-import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, useTemplateRef, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation } from 'skinview3d';
 
@@ -27,6 +27,8 @@ const animationOptions = {
   flying: { value: 'flying', label: 'Fly' },
 };
 
+const showOuterLayer = ref(true);
+
 onMounted(() => {
   skinViewer = new SkinViewer({
     canvas: canvas.value,
@@ -36,23 +38,19 @@ onMounted(() => {
   });
   skinViewer.controls.enableZoom = false;
 
-  // TODO: add background toggle, second layer toggle
+  // TODO: add background toggle
 
-  watch(
-    [data, equipmentType],
-    () => {
-      setSkin();
-    },
-    { immediate: true },
-  );
+  watchEffect(() => {
+    setSkin();
+  });
 
-  watch(
-    animationType,
-    () => {
-      setAnimation();
-    },
-    { immediate: true },
-  );
+  watchEffect(() => {
+    setAnimation();
+  });
+
+  watchEffect(() => {
+    skinViewer.playerObject.skin.setOuterLayerVisible(showOuterLayer.value);
+  });
 });
 
 onBeforeUnmount(() => {
@@ -119,6 +117,14 @@ function setAnimation() {
     </label>
 
     <p>Animation type: {{ animationType }}</p>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" v-model="showOuterLayer" />
+      Show outer layer
+    </label>
+    <p>Outer layer shown: {{ showOuterLayer }}</p>
   </div>
 </template>
 
