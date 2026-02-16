@@ -3,14 +3,24 @@ import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
 
-const currentLocation = window.location.href;
+const route = useRoute();
+const currentLocation = ref(null);
+
+watch(
+  route,
+  () => {
+    currentLocation.value = window.location.href;
+  },
+  { immediate: true },
+);
 </script>
 
 <template>

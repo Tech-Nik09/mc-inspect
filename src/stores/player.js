@@ -15,9 +15,13 @@ export const usePlayerStore = defineStore('player', () => {
   async function fetchPlayer() {
     query.value = query.value.trim();
     let name = toValue(query);
-    let isLoadingTimeout;
+    let loadingTimeout;
 
     try {
+      loadingTimeout = setTimeout(() => {
+        isLoading.value = true;
+      }, 200);
+
       if (!name) {
         throw new Error('Playername cannot be empty');
       }
@@ -26,11 +30,15 @@ export const usePlayerStore = defineStore('player', () => {
         throw new Error(`Invalid player name "${name}"`);
       }
 
-      isLoadingTimeout = setTimeout(() => {
-        isLoading.value = true;
-      }, 200);
+      const headers = {};
+      const apiKey = import.meta.env.VITE_API_KEY;
+      if (apiKey) {
+        headers['X-API-Key'] = apiKey;
+      }
 
-      const res = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${name}`);
+      const res = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${name}`, {
+        headers,
+      });
       if (!res.ok) {
         throw new Error(`Could not find player "${name}"`);
       }
@@ -48,7 +56,7 @@ export const usePlayerStore = defineStore('player', () => {
 
       return { name: 'players' };
     } finally {
-      clearTimeout(isLoadingTimeout);
+      clearTimeout(loadingTimeout);
       isLoading.value = false;
     }
   }

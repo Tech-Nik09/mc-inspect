@@ -1,6 +1,6 @@
 <script setup>
 import { usePlayerStore } from '@/stores/player';
-import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, useTemplateRef, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation } from 'skinview3d';
 
@@ -10,6 +10,7 @@ const { isLoading, data } = storeToRefs(playerStore);
 const canvas = useTemplateRef('skin_container');
 let skinViewer = null;
 
+const hasCape = ref(false);
 const equipmentType = ref('cape');
 const equipmentOptions = {
   noEquipment: { value: null, label: 'No equipment' },
@@ -26,6 +27,8 @@ const animationOptions = {
   flying: { value: 'flying', label: 'Fly' },
 };
 
+const showOuterLayer = ref(true);
+
 onMounted(() => {
   skinViewer = new SkinViewer({
     canvas: canvas.value,
@@ -35,23 +38,19 @@ onMounted(() => {
   });
   skinViewer.controls.enableZoom = false;
 
-  // TODO: add background toggle, second layer toggle
+  // TODO: add background toggle
 
-  watch(
-    [data, equipmentType],
-    () => {
-      setSkin();
-    },
-    { immediate: true },
-  );
+  watchEffect(() => {
+    setSkin();
+  });
 
-  watch(
-    animationType,
-    () => {
-      setAnimation();
-    },
-    { immediate: true },
-  );
+  watchEffect(() => {
+    setAnimation();
+  });
+
+  watchEffect(() => {
+    skinViewer.playerObject.skin.setOuterLayerVisible(showOuterLayer.value);
+  });
 });
 
 onBeforeUnmount(() => {
@@ -61,7 +60,9 @@ onBeforeUnmount(() => {
 function setSkin() {
   skinViewer.loadSkin(data.value.skinUrl);
 
-  if (data.value.capeUrl && equipmentType.value) {
+  hasCape.value = data.value.capeUrl ? true : false;
+
+  if (hasCape.value && equipmentType.value) {
     skinViewer.loadCape(data.value.capeUrl, { backEquipment: equipmentType.value });
   } else {
     skinViewer.loadCape(null);
@@ -100,21 +101,31 @@ function setAnimation() {
 <template>
   <canvas ref="skin_container"></canvas>
 
-  <div v-for="(option, key) in equipmentOptions" :key="key">
-    <label>
+  <div v-if="hasCape">
+    <label v-for="(option, key) in equipmentOptions" :key="key">
       <input type="radio" :value="option.value" v-model="equipmentType" />
       {{ option.label }}
     </label>
-  </div>
-  <p>Equipment type: {{ equipmentType }}</p>
 
-  <div v-for="(option, key) in animationOptions" :key="key">
-    <label>
+    <p>Equipment type: {{ equipmentType }}</p>
+  </div>
+
+  <div>
+    <label v-for="(option, key) in animationOptions" :key="key">
       <input type="radio" :value="option.value" v-model="animationType" />
       {{ option.label }}
     </label>
+
+    <p>Animation type: {{ animationType }}</p>
   </div>
-  <p>Animation type: {{ animationType }}</p>
+
+  <div>
+    <label>
+      <input type="checkbox" v-model="showOuterLayer" />
+      Show outer layer
+    </label>
+    <p>Outer layer shown: {{ showOuterLayer }}</p>
+  </div>
 </template>
 
 <style scoped>

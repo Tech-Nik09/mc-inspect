@@ -2,16 +2,16 @@ import { ref } from 'vue';
 
 export function useClipboard() {
   const isCopied = ref(false);
-  let isCopiedTimeout;
+  let copiedTimeout;
 
   async function copyToClipboard(text) {
     try {
       await navigator.clipboard.writeText(text);
 
-      clearTimeout(isCopiedTimeout);
+      clearTimeout(copiedTimeout);
       isCopied.value = true;
 
-      isCopiedTimeout = setTimeout(() => {
+      copiedTimeout = setTimeout(() => {
         isCopied.value = false;
       }, 2000);
     } catch (err) {
