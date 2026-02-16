@@ -4,10 +4,10 @@ export function useFileDownload() {
   const isDownloading = ref(false);
 
   async function downloadFileFromURL(url, filename) {
-    let isDownloadingTimeout;
+    let downloadingTimeout;
 
     try {
-      isDownloadingTimeout = setTimeout(() => {
+      downloadingTimeout = setTimeout(() => {
         isDownloading.value = true;
       }, 200);
 
@@ -30,7 +30,7 @@ export function useFileDownload() {
     } catch (err) {
       console.error(`Error while downloading from URL "${url}": ${err}`);
     } finally {
-      clearTimeout(isDownloadingTimeout);
+      clearTimeout(downloadingTimeout);
       isDownloading.value = false;
     }
   }
