@@ -23,10 +23,13 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
   <p v-if="isLoading">Loading</p>
   <p v-else-if="error">{{ error }}</p>
 
-  <div v-for="player in favoritePlayers" :key="player.meta.id">
-    <PlayerFavoriteCard :data="player" />
-    <ToggleFavoriteButton :id="player.meta.id" />
+  <div v-if="favoritePlayers.length">
+    <div v-for="player in favoritePlayers" :key="player.meta.id">
+      <PlayerFavoriteCard :data="player" />
+      <ToggleFavoriteButton :id="player.meta.id" />
+    </div>
   </div>
+  <p v-else>There are no favorites yet.</p>
 </template>
 
 <style scoped></style>
