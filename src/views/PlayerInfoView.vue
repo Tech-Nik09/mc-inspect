@@ -3,6 +3,7 @@ import { usePlayerStore } from '@/stores/player';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
+import ToggleFavouriteButton from '@/components/ToggleFavouriteButton.vue';
 import { defineAsyncComponent, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -35,6 +36,7 @@ watch(
     <CopyButton :text="currentLocation" label="shareable link" />
     <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
     <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
+    <ToggleFavouriteButton :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
   </div>
 
   <h2>Fetched player data</h2>
