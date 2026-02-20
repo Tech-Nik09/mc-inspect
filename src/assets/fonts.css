@@ -1,0 +1,67 @@
+/* Inter */
+@font-face {
+  font-family: 'Inter';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/Inter/Inter-VariableFont_opsz\,wght.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  src: url(./fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.woff2) format('woff2');
+}
+
+/* JetBrains Mono */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/JetBrains_Mono/JetBrainsMono-VariableFont_wght.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+  src: url(./fonts/JetBrains_Mono/JetBrainsMono-Italic-VariableFont_wght.woff2) format('woff2');
+}
+
+/* Noto Sans */
+@font-face {
+  font-family: 'Noto Sans';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  src: url(./fonts/Noto_Sans/NotoSans-Italic-VariableFont_wdth\,wght.woff2) format('woff2');
+}
+
+/* Roboto */
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/Roboto/Roboto-VariableFont_wdth\,wght.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  src: url(./fonts/Roboto/Roboto-Italic-VariableFont_wdth\,wght.woff2) format('woff2');
+}

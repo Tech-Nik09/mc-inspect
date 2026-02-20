@@ -38,8 +38,6 @@ onMounted(() => {
   });
   skinViewer.controls.enableZoom = false;
 
-  // TODO: add background toggle
-
   watchEffect(() => {
     setSkin();
   });
