@@ -1,0 +1,28 @@
+:root {
+  --c-white: #ffffff;
+
+  --c-black: #000000;
+  --c-black-soft: #252529;
+}
+
+:root {
+  --color-background: var(--c-white);
+  --color-font: var(--c-black);
+}
+
+:root[data-theme='dark'] {
+  --color-background: var(--c-black-soft);
+  --color-font: var(--c-white);
+}
+
+:root[data-theme='oled'] {
+  --color-background: var(--c-black);
+  --color-font: var(--c-white);
+}
+
+:root[data-theme='auto'] {
+  @media (prefers-color-scheme: dark) {
+    --color-background: var(--c-black-soft);
+    --color-font: var(--c-white);
+  }
+}
