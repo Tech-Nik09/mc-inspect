@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-const theme = ref(localStorage.getItem('theme') || 'auto');
+const themes = ['light', 'dark', 'auto'] as const;
+type Theme = (typeof themes)[number];
+
+function isTheme(val: any): val is Theme {
+  return themes.includes(val);
+}
+
+const savedTheme = localStorage.getItem('theme');
+const theme = ref<Theme>(isTheme(savedTheme) ? savedTheme : 'auto');
 
 watch(
   theme,
@@ -14,9 +22,7 @@ watch(
 </script>
 
 <template>
-  <input type="radio" value="auto" v-model="theme" />
-  <input type="radio" value="light" v-model="theme" />
-  <input type="radio" value="dark" v-model="theme" />
+  <input v-for="item in themes" :key="item" type="radio" :value="item" v-model="theme" />
 
   <p>Theme: {{ theme }}</p>
 </template>

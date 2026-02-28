@@ -3,7 +3,11 @@ import { useFileDownload } from '@/composables/downloadFileFromURL';
 
 const { isDownloading, downloadFileFromURL } = useFileDownload();
 
-const props = defineProps(['url', 'filename', 'label']);
+const props = defineProps<{
+  url: string;
+  filename: string;
+  label: string;
+}>();
 </script>
 
 <template>

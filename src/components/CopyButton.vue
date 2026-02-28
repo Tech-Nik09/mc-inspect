@@ -3,7 +3,10 @@ import { useClipboard } from '@/composables/copyToClipboard';
 
 const { isCopied, copyToClipboard } = useClipboard();
 
-const props = defineProps(['text', 'label']);
+const props = defineProps<{
+  text: string;
+  label: string;
+}>();
 </script>
 
 <template>
