@@ -1,10 +1,16 @@
 import { ref } from 'vue';
+import type { Ref } from 'vue';
 
-export function useClipboard() {
+type UseClipboard = {
+  isCopied: Ref<boolean>;
+  copyToClipboard: (text: string) => Promise<void>;
+};
+
+export function useClipboard(): UseClipboard {
   const isCopied = ref(false);
-  let copiedTimeout;
+  let copiedTimeout: number;
 
-  async function copyToClipboard(text) {
+  async function copyToClipboard(text: string): Promise<void> {
     try {
       await navigator.clipboard.writeText(text);
 
