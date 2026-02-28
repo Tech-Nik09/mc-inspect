@@ -2,11 +2,6 @@
 
 A work in progress Minecraft player and server inspection web application.
 
-## Archive/legacy note:
-
-This project is no longer being updated. Please consider checking out the new TypeScript version of [mc-inspect](https://github.com/Tech-Nik09/mc-inspect).
-
-
 ## Please notice
 
 1. This project is not affiliated with Mojang in any way.
