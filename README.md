@@ -1,42 +1,23 @@
 # mc-inspect
 
-This template should help get you started developing with Vue 3 in Vite.
+A work in progress Minecraft player and server inspection web application.
 
-## Recommended IDE Setup
+## Archive/legacy note:
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This project is no longer being updated. Please consider checking out the new TypeScript version of [mc-inspect](https://github.com/Tech-Nik09/mc-inspect).
 
-## Recommended Browser Setup
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Please notice
 
-## Type Support for `.vue` Imports in TS
+1. This project is not affiliated with Mojang in any way.
+2. This project is licensed under the MIT license.
+3. There is no full release yet, since the project is currently in early developement.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Licensing
 
-## Customize configuration
+This project uses third-party software components.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+- [vuejs](https://github.com/vuejs/core) - [MIT license](https://github.com/vuejs/core?tab=MIT-1-ov-file)
+- [vue-router](https://github.com/vuejs/router) - [MIT license](https://github.com/vuejs/router?tab=MIT-1-ov-file)
+- [pinia](https://github.com/vuejs/pinia) - [MIT license](https://github.com/vuejs/pinia?tab=MIT-1-ov-file)
+- [skinview3d](https://github.com/bs-community/skinview3d) - [MIT license](https://github.com/bs-community/skinview3d?tab=MIT-1-ov-file)
