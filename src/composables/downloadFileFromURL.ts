@@ -8,9 +8,10 @@ type UseFileDownload = {
 
 export function useFileDownload(): UseFileDownload {
   const isDownloading = ref(false);
-  let downloadingTimeout: number;
 
   async function downloadFileFromURL(url: string, filename: string): Promise<void> {
+    let downloadingTimeout: number | undefined;
+
     try {
       downloadingTimeout = setTimeout(() => {
         isDownloading.value = true;
