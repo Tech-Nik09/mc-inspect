@@ -25,8 +25,8 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
 
   <div v-if="favoritePlayers.length">
     <div v-for="player in favoritePlayers" :key="player.meta.id">
-      <PlayerFavoriteCard :data="player" />
-      <FavoriteToggle :id="player.meta.id" />
+      <PlayerFavoriteCard :data="player.data" />
+      <FavoriteToggle :id="player.meta.id" :type="player.meta.type" :data="player.data" />
     </div>
   </div>
   <p v-else>There are no favorites yet.</p>

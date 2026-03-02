@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { useFavoritesStore } from '@/stores/favorites';
+import type { Favorite } from '@/types';
 
 const favoritesStore = useFavoritesStore();
 
-const props = defineProps(['id', 'type', 'data']);
+const props = defineProps<{
+  id: Favorite['meta']['id'];
+  type: Favorite['meta']['type'];
+  data: Favorite['data'];
+}>();
 </script>
 
 <template>
