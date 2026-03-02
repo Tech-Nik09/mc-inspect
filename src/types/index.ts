@@ -1,1 +1,2 @@
-export * from '@/types/players';
+export * from '@/types/player';
+export * from '@/types/favorite';
