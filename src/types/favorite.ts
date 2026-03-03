@@ -5,3 +5,11 @@ export type Favorite = {
   };
   data: Record<string, string>;
 };
+
+export type FavoritePlayer = Favorite & {
+  meta: { type: 'player' };
+};
+
+export type FavoriteServer = Favorite & {
+  meta: { type: 'server' };
+};
