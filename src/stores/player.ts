@@ -28,7 +28,7 @@ export const usePlayerStore = defineStore('player', () => {
 
       if (!validateName(name)) throw new Error(`Invalid player name "${name}"`);
 
-      const headers: { [key: string]: string } = {};
+      const headers: Record<string, string> = {};
       const apiKey: string = import.meta.env.VITE_API_KEY;
       if (apiKey) headers['X-API-Key'] = apiKey;
 
