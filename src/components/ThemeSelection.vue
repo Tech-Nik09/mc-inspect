@@ -4,8 +4,8 @@ import { ref, watch } from 'vue';
 const themes = ['light', 'dark', 'auto'] as const;
 type Theme = (typeof themes)[number];
 
-function isTheme(val: any): val is Theme {
-  return themes.includes(val);
+function isTheme(theme: any): theme is Theme {
+  return themes.includes(theme);
 }
 
 const savedTheme = localStorage.getItem('theme');
