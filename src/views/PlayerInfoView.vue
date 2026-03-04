@@ -13,7 +13,7 @@ const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
 
 const route = useRoute();
-const currentLocation = ref(null);
+const currentLocation = ref<string>('');
 
 watch(
   route,
@@ -32,41 +32,39 @@ watch(
 
   <PlayerSearchBar />
 
-  <div>
-    <CopyButton :text="currentLocation" label="shareable link" />
-    <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
-    <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
-    <FavoriteToggle :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
-  </div>
+  <template v-if="data">
+    <div>
+      <CopyButton :text="currentLocation" label="shareable link" />
+      <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
+      <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
+      <FavoriteToggle :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
+    </div>
 
-  <h2>Fetched player data</h2>
-  <p>name: {{ data.name }}</p>
-  <CopyButton :text="data.name" label="Name" />
+    <h2>Fetched player data</h2>
+    <div>
+      <p>name: {{ data.name }}</p>
+      <CopyButton :text="data.name" label="Name" />
 
-  <p>uuid: {{ data.uuid }}</p>
-  <CopyButton :text="data.uuid" label="UUID" />
+      <p>uuid: {{ data.uuid }}</p>
+      <CopyButton :text="data.uuid" label="UUID" />
 
-  <p>skinId: {{ data.skinId }}</p>
-  <CopyButton :text="data.skinId" label="Skin ID" />
+      <p>skinId: {{ data.skinId }}</p>
+      <CopyButton :text="data.skinId" label="Skin ID" />
 
-  <p>playerModel: {{ data.playerModel }}</p>
-  <CopyButton :text="data.playerModel" label="Model" />
+      <p>playerModel: {{ data.playerModel }}</p>
+      <CopyButton :text="data.playerModel" label="Model" />
 
-  <p>skinUrl: {{ data.skinUrl }}</p>
-  <CopyButton :text="data.skinUrl" label="Skin URL" />
+      <p>skinUrl: {{ data.skinUrl }}</p>
+      <CopyButton :text="data.skinUrl" label="Skin URL" />
 
-  <template v-if="data.capeUrl">
-    <p>capeUrl: {{ data.capeUrl }}</p>
-    <CopyButton :text="data.capeUrl" label="Cape URL" />
+      <template v-if="data.capeUrl">
+        <p>capeUrl: {{ data.capeUrl }}</p>
+        <CopyButton :text="data.capeUrl" label="Cape URL" />
+      </template>
+    </div>
+
+    <SkinView />
   </template>
-
-  <div>
-    <img :src="data.skinUrl" alt="" />
-    <img v-if="data.capeUrl" :src="data.capeUrl" alt="" />
-    <img :src="`https://vzge.me/face/64/${data.skinId}.webp?${data.playerModel}&no=shadow`" alt="" />
-  </div>
-
-  <SkinView />
 
   <p v-if="isLoading">Loading</p>
 </template>
