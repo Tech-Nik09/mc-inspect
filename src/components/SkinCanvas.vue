@@ -8,28 +8,30 @@ const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
 
 const canvas = useTemplateRef('skin_container');
-let skinViewer = null;
+let skinViewer: SkinViewer;
 
+const showOuterLayer = ref(true);
 const hasCape = ref(false);
-const equipmentType = ref('cape');
+
+const equipmentType = ref<null | 'cape' | 'elytra'>('cape');
 const equipmentOptions = {
   noEquipment: { value: null, label: 'No equipment' },
   cape: { value: 'cape', label: 'Cape' },
   elytra: { value: 'elytra', label: 'Elytra' },
-};
+} as const;
 
-const animationType = ref('idle');
+const animationType = ref<null | 'idle' | 'walking' | 'crouching' | 'flying'>('idle');
 const animationOptions = {
   noAnimation: { value: null, label: 'No animation' },
   idle: { value: 'idle', label: 'Idle' },
   walking: { value: 'walking', label: 'Walk' },
   crouching: { value: 'crouching', label: 'Crouch' },
   flying: { value: 'flying', label: 'Fly' },
-};
-
-const showOuterLayer = ref(true);
+} as const;
 
 onMounted(() => {
+  if (!canvas.value) return;
+
   skinViewer = new SkinViewer({
     canvas: canvas.value,
     width: 300,
@@ -55,12 +57,14 @@ onBeforeUnmount(() => {
   skinViewer.dispose();
 });
 
-function setSkin() {
+function setSkin(): void {
+  if (!data.value) return;
+
   skinViewer.loadSkin(data.value.skinUrl);
 
-  hasCape.value = data.value.capeUrl ? true : false;
+  hasCape.value = !!data.value.capeUrl;
 
-  if (hasCape.value && equipmentType.value) {
+  if (hasCape.value && equipmentType.value && data.value.capeUrl) {
     skinViewer.loadCape(data.value.capeUrl, { backEquipment: equipmentType.value });
   } else {
     skinViewer.loadCape(null);
@@ -73,8 +77,8 @@ function setSkin() {
   }
 }
 
-function setAnimation() {
-  let newAnimation = null;
+function setAnimation(): void {
+  let newAnimation: IdleAnimation | WalkingAnimation | CrouchAnimation | FlyingAnimation | null;
   switch (animationType.value) {
     case 'idle':
       newAnimation = new IdleAnimation();
