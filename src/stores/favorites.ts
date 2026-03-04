@@ -1,11 +1,12 @@
 import { computed, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
+import type { Favorite, FavoritePlayer, FavoriteServer } from '@/types';
 
 export const useFavoritesStore = defineStore('favorites', () => {
-  const favorites = ref(JSON.parse(localStorage.getItem('favorites')) || []);
+  const favorites = ref<Favorite[]>(JSON.parse(localStorage.getItem('favorites') || '[]'));
 
-  const favoritePlayers = computed(() => favorites.value.filter((e) => e.meta.type === 'player'));
-  const favoriteServers = computed(() => favorites.value.filter((e) => e.meta.type === 'server'));
+  const favoritePlayers = computed(() => favorites.value.filter((e): e is FavoritePlayer => e.meta.type === 'player'));
+  const favoriteServers = computed(() => favorites.value.filter((e): e is FavoriteServer => e.meta.type === 'server'));
 
   watch(
     favorites,
@@ -15,15 +16,15 @@ export const useFavoritesStore = defineStore('favorites', () => {
     { deep: true },
   );
 
-  function isFavorite(id) {
+  function isFavorite(id: Favorite['meta']['id']): boolean {
     return favorites.value.some((e) => e.meta.id === id);
   }
 
-  function toggleFavorite(id, type, data) {
+  function toggleFavorite(id: Favorite['meta']['id'], type: Favorite['meta']['type'], data: Favorite['data']): void {
     if (isFavorite(id)) {
       favorites.value = favorites.value.filter((e) => e.meta.id !== id);
     } else {
-      favorites.value.push({ ...data, meta: { id, type } });
+      favorites.value.push({ data, meta: { id, type } });
     }
   }
 

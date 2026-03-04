@@ -27,11 +27,11 @@ const router = createRouter({
           beforeEnter: async (to) => {
             const playerStore = usePlayerStore();
 
-            if (to.params.playerName === playerStore.data?.name) {
-              return true;
-            }
+            const playerName = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
 
-            playerStore.query = to.params.playerName;
+            if (playerName === playerStore.data?.name) return true;
+
+            playerStore.query = playerName;
             const newRoute = await playerStore.fetchPlayer();
             return newRoute;
           },
@@ -52,9 +52,7 @@ router.afterEach((to) => {
   const baseTitle = 'mc-inspect';
   let routeTitle = to.meta.title;
 
-  if (to.name === 'playerInfo') {
-    routeTitle = to.params.playerName;
-  }
+  if (to.name === 'playerInfo') routeTitle = to.params.playerName;
 
   document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
 });

@@ -8,15 +8,15 @@ const router = useRouter();
 const playerStore = usePlayerStore();
 const { isLoading, query } = storeToRefs(playerStore);
 
-async function onQuery() {
+async function onSearch(): Promise<void> {
   const newRoute = await playerStore.fetchPlayer();
   router.push(newRoute);
 }
 </script>
 
 <template>
-  <input type="text" :disabled="isLoading" v-model="query" @keyup.enter="onQuery" />
-  <button :disabled="isLoading" @click="onQuery">{{ isLoading ? 'loading' : 'Search' }}</button>
+  <input type="text" :disabled="isLoading" v-model="query" @keyup.enter="onSearch" />
+  <button :disabled="isLoading" @click="onSearch">{{ isLoading ? 'loading' : 'Search' }}</button>
 </template>
 
 <style scoped></style>

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import type { Favorite } from '@/types';
 
 const router = useRouter();
 
-const props = defineProps(['data']);
+const props = defineProps<{
+  data: Favorite['data'];
+}>();
 </script>
 
 <template>
