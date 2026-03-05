@@ -8,10 +8,9 @@ type UseClipboard = {
 
 export function useClipboard(): UseClipboard {
   const isCopied = ref(false);
+  let copiedTimeout: number | undefined;
 
   async function copyToClipboard(text: string): Promise<void> {
-    let copiedTimeout: number | undefined;
-
     try {
       await navigator.clipboard.writeText(text);
 
