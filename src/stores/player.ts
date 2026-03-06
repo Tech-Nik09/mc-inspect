@@ -1,5 +1,6 @@
 import { ref, toValue } from 'vue';
 import { defineStore } from 'pinia';
+import type { RouteLocationNamedRaw } from 'vue-router';
 import type { Player } from '@/types';
 
 export const usePlayerStore = defineStore('player', () => {
@@ -13,7 +14,7 @@ export const usePlayerStore = defineStore('player', () => {
     return nameCriteria.test(name);
   }
 
-  async function fetchPlayer() {
+  async function fetchPlayer(): Promise<RouteLocationNamedRaw> {
     let loadingTimeout: number | undefined;
 
     try {
