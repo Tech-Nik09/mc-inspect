@@ -1,6 +1,7 @@
 import { usePlayerStore } from '@/stores/player';
 import HomeView from '../views/HomeView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteLocationNamedRaw, RouteLocationNormalizedGeneric } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,17 +25,6 @@ const router = createRouter({
           path: ':playerName',
           name: 'playerInfo',
           component: () => import('@/views/PlayerInfoView.vue'),
-          beforeEnter: async (to) => {
-            const playerStore = usePlayerStore();
-
-            const playerName = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
-
-            if (playerName === playerStore.data?.name) return true;
-
-            playerStore.query = playerName;
-            const newRoute = await playerStore.fetchPlayer();
-            return newRoute;
-          },
         },
       ],
     },
@@ -48,11 +38,26 @@ const router = createRouter({
   sensitive: true,
 });
 
+async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<true | RouteLocationNamedRaw> {
+  const playerStore = usePlayerStore();
+
+  const playerName = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
+
+  if (playerName === playerStore.data?.name) return true;
+
+  playerStore.query = playerName;
+  const newRoute = await playerStore.fetchPlayer();
+  return newRoute;
+}
+
+router.beforeEach(async (to) => {
+  if (to.name === 'playerInfo') return await handlePlayerRoute(to);
+});
+
 router.afterEach((to) => {
   const baseTitle = 'mc-inspect';
-  let routeTitle = to.meta.title;
-
-  if (to.name === 'playerInfo') routeTitle = to.params.playerName;
+  let routeTitle: string | null = typeof to.meta.title === 'string' ? to.meta.title : null;
+  if (to.name === 'playerInfo') routeTitle = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? null;
 
   document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
 });
