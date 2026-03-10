@@ -7,7 +7,7 @@ import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAni
 const playerStore = usePlayerStore();
 const { isLoading, data } = storeToRefs(playerStore);
 
-const canvas = useTemplateRef('skin_container');
+const skinCanvas = useTemplateRef('skinCanvas');
 let skinViewer: SkinViewer;
 
 const showOuterLayer = ref(true);
@@ -30,10 +30,10 @@ const animationOptions = {
 } as const;
 
 onMounted(() => {
-  if (!canvas.value) return;
+  if (!skinCanvas.value) return;
 
   skinViewer = new SkinViewer({
-    canvas: canvas.value,
+    canvas: skinCanvas.value,
     width: 300,
     height: 400,
     zoom: 0.7,
@@ -101,7 +101,7 @@ function setAnimation(): void {
 </script>
 
 <template>
-  <canvas ref="skin_container"></canvas>
+  <canvas ref="skinCanvas"></canvas>
 
   <div v-if="hasCape">
     <label v-for="(option, key) in equipmentOptions" :key="key">

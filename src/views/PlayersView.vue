@@ -28,6 +28,7 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
       <PlayerFavoriteCard :data="player.data" />
       <FavoriteToggle :id="player.meta.id" :type="player.meta.type" :data="player.data" />
     </div>
+    <p>Current favorites: {{ favoritePlayers.length }}/10</p>
   </div>
   <p v-else>There are no favorites yet.</p>
 </template>
