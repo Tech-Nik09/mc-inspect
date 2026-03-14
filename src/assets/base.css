@@ -1,23 +1,73 @@
+/* Base variables */
 :root {
-  --c-white: #ffffff;
+  --c-accent-1: #7868e6;
 
-  --c-black: #000000;
-  --c-black-soft: #252529;
+  --c-white-1: #ffffff;
+  --c-white-2: #f2f2f3;
+  --c-white-3: #dadadc;
+
+  --c-black-1: #000000;
+  --c-black-2: #030712;
+  --c-black-3: #1c202a;
+
+  --c-gray-1: #364153;
+  --c-gray-2: #465160;
+
+  --t-theme: 0.5s ease-out;
 }
 
+/* Semantic variables */
 :root {
-  --color-background: var(--c-white);
-  --color-font: var(--c-black);
+  --primary-accent-color: var(--c-accent-1);
+  --theme-transition: var(--t-theme);
 }
 
+/* Semantic variables light / auto-light */
+:root {
+  --primary-background-color: var(--c-white-1);
+  --secondary-background-color: var(--c-white-2);
+
+  --primary-radio-color: var(--c-white-1);
+
+  --primary-border-color: var(--c-white-3);
+
+  --primary-font-color: var(--c-black-1);
+}
+
+/* Semantic variables dark */
 :root[data-theme='dark'] {
-  --color-background: var(--c-black-soft);
-  --color-font: var(--c-white);
+  --primary-background-color: var(--c-black-2);
+  --secondary-background-color: var(--c-black-3);
+
+  --primary-radio-color: var(--c-gray-1);
+
+  --primary-border-color: var(--c-gray-2);
+
+  --primary-font-color: var(--c-white-1);
 }
 
+/* Semantic variables auto-dark */
 :root[data-theme='auto'] {
   @media (prefers-color-scheme: dark) {
-    --color-background: var(--c-black-soft);
-    --color-font: var(--c-white);
+    --primary-background-color: var(--c-black-2);
+    --secondary-background-color: var(--c-black-3);
+
+    --primary-radio-color: var(--c-gray-1);
+
+    --primary-border-color: var(--c-gray-2);
+
+    --primary-font-color: var(--c-white-1);
   }
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
