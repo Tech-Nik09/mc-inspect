@@ -34,8 +34,8 @@ onMounted(() => {
 
   skinViewer = new SkinViewer({
     canvas: skinCanvas.value,
-    width: 300,
-    height: 400,
+    width: 600,
+    height: 600,
     zoom: 0.7,
   });
   skinViewer.controls.enableZoom = false;
@@ -101,15 +101,13 @@ function setAnimation(): void {
 </script>
 
 <template>
-  <canvas ref="skinCanvas"></canvas>
+  <canvas ref="skinCanvas" class="main-canvas"></canvas>
 
   <div v-if="hasCape">
     <label v-for="(option, key) in equipmentOptions" :key="key">
       <input type="radio" :value="option.value" v-model="equipmentType" />
       {{ option.label }}
     </label>
-
-    <p>Equipment type: {{ equipmentType }}</p>
   </div>
 
   <div>
@@ -117,8 +115,6 @@ function setAnimation(): void {
       <input type="radio" :value="option.value" v-model="animationType" />
       {{ option.label }}
     </label>
-
-    <p>Animation type: {{ animationType }}</p>
   </div>
 
   <div>
@@ -126,12 +122,18 @@ function setAnimation(): void {
       <input type="checkbox" v-model="showOuterLayer" />
       Show outer layer
     </label>
-    <p>Outer layer shown: {{ showOuterLayer }}</p>
   </div>
 </template>
 
 <style scoped>
-canvas {
-  background-color: rgb(220, 220, 220);
+.main-canvas {
+  background-color: var(--secondary-background-color);
+  border: 2px solid var(--primary-border-color);
+
+  border-radius: 2rem;
+
+  transition:
+    background-color var(--theme-transition),
+    border-color var(--theme-transition);
 }
 </style>
