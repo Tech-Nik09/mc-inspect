@@ -27,7 +27,7 @@ import ThemeSelection from '@/components/ThemeSelection.vue';
   display: flex;
   align-items: center;
 
-  border-bottom: 1px solid var(--primary-accent-color);
+  border-bottom: 2px solid var(--primary-border-color);
 }
 
 .main-nav {
