@@ -62,6 +62,7 @@ function isCurrentTheme(currentTheme: Theme): boolean {
 
   border-radius: 100vmax;
   background-color: var(--secondary-background-color);
+
   transition: background-color var(--theme-transition);
 }
 

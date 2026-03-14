@@ -28,6 +28,8 @@ import ThemeSelection from '@/components/ThemeSelection.vue';
   align-items: center;
 
   border-bottom: 2px solid var(--primary-border-color);
+
+  transition: border-color var(--theme-transition);
 }
 
 .main-nav {
