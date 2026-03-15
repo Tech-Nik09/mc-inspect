@@ -22,11 +22,17 @@ h4,
 h5,
 h6 {
   font-family: var(--primary-font);
+  font-weight: 800;
 }
 
 a,
 button,
-input,
 label {
   font-family: var(--primary-font);
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }
