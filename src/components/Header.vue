@@ -13,8 +13,6 @@ const { isLoading } = storeToRefs(playerStore);
     <nav class="main-nav">
       <router-link class="main-link" :to="{ name: 'home' }">Home</router-link>
       <router-link class="main-link" :to="{ name: 'players' }">Players</router-link>
-      <router-link class="main-link" :to="{ name: 'playerInfo', params: { playerName: 'examplename' } }">Example player</router-link>
-      <router-link class="main-link" :to="{ path: '/does-not-exist' }">URL that doesn't exist</router-link>
     </nav>
 
     <a href="https://github.com/Tech-Nik09/mc-inspect" target="_blank" class="github-link">
@@ -49,8 +47,15 @@ const { isLoading } = storeToRefs(playerStore);
 
 .main-link {
   font-size: 1.3rem;
+  font-weight: 700;
 
   position: relative;
+
+  transition: color 0.5s ease-out;
+}
+
+.main-link:hover {
+  color: var(--primary-accent-color);
 }
 
 .main-link::after {
