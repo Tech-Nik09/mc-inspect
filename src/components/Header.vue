@@ -31,7 +31,9 @@ const { isLoading } = storeToRefs(playerStore);
   background-color: var(--primary-background-color);
   border-bottom: 2px solid var(--primary-border-color);
 
-  transition: border-color var(--theme-transition);
+  transition:
+    background-color var(--theme-transition),
+    border-color var(--theme-transition);
 }
 
 .main-nav {
