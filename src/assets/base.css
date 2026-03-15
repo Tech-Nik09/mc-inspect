@@ -14,6 +14,7 @@
   --c-gray-2: #465160;
 
   --t-theme: 0.5s ease-out;
+  --t-hover: 0.2s ease-in;
 
   --f-family-1: 'Montserrat';
   --f-family-2: 'JetBrains Mono';
@@ -22,7 +23,9 @@
 /* Semantic variables */
 :root {
   --primary-accent-color: var(--c-accent-1);
+
   --theme-transition: var(--t-theme);
+  --hover-transition: var(--t-hover);
 
   --primary-font: var(--f-family-1);
   --secondary-font: var(--f-family-2);

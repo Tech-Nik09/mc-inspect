@@ -2,6 +2,7 @@
 import { usePlayerStore } from '@/stores/player';
 import ThemeSelection from '@/components/ThemeSelection.vue';
 import { storeToRefs } from 'pinia';
+import MdiGithub from '~icons/mdi/github';
 
 const playerStore = usePlayerStore();
 const { isLoading } = storeToRefs(playerStore);
@@ -15,6 +16,10 @@ const { isLoading } = storeToRefs(playerStore);
       <router-link class="main-link" :to="{ name: 'playerInfo', params: { playerName: 'examplename' } }">Example player</router-link>
       <router-link class="main-link" :to="{ path: '/does-not-exist' }">URL that doesn't exist</router-link>
     </nav>
+
+    <a href="https://github.com/Tech-Nik09/mc-inspect" target="_blank" class="github-link">
+      <MdiGithub class="github-icon" />
+    </a>
 
     <ThemeSelection />
   </header>
@@ -70,8 +75,28 @@ const { isLoading } = storeToRefs(playerStore);
   left: 0;
 }
 
-.theme-selection {
+.github-link {
+  width: 2.5rem;
+  height: 2.5rem;
+
+  margin-right: 1rem;
   margin-left: auto;
+}
+
+.github-icon {
+  width: 100%;
+  height: 100%;
+
+  color: var(--primary-font-color);
+
+  transition:
+    color var(--hover-transition),
+    transform var(--hover-transition);
+}
+
+.github-link:hover .github-icon {
+  color: var(--primary-accent-color);
+  transform: translateY(-6px) scale(1.1);
 }
 
 .loading {

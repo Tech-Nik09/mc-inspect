@@ -49,14 +49,10 @@ function isCurrentTheme(currentTheme: Theme): boolean {
 
 <style scoped>
 .theme-selection {
-  --theme-selection-size: 2.5rem;
-}
-
-.theme-selection {
-  height: var(--theme-selection-size);
+  height: 2.5rem;
 
   display: grid;
-  grid-template-columns: repeat(3, var(--theme-selection-size));
+  grid-template-columns: repeat(3, 2.5rem);
   justify-content: center;
   align-items: center;
 
