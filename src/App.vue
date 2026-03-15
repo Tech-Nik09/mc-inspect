@@ -9,4 +9,12 @@ import Header from './components/Header.vue';
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+  padding-top: 5rem;
+}
+
+.main-header {
+  position: fixed;
+}
+</style>

@@ -28,6 +28,7 @@ const { isLoading } = storeToRefs(playerStore);
   display: flex;
   align-items: center;
 
+  background-color: var(--primary-background-color);
   border-bottom: 2px solid var(--primary-border-color);
 
   transition: border-color var(--theme-transition);
@@ -49,10 +50,11 @@ const { isLoading } = storeToRefs(playerStore);
 
 .loading::after {
   content: '';
-  position: absolute;
-  bottom: -2px;
 
   height: 2px;
+
+  position: absolute;
+  bottom: -2px;
 
   background-color: var(--primary-accent-color);
 
