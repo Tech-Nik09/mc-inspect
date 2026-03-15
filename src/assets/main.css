@@ -8,3 +8,25 @@ body {
     background-color var(--theme-transition),
     color var(--theme-transition);
 }
+
+p,
+div,
+span {
+  font-family: var(--secondary-font);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--primary-font);
+}
+
+a,
+button,
+input,
+label {
+  font-family: var(--primary-font);
+}

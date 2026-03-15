@@ -14,12 +14,18 @@
   --c-gray-2: #465160;
 
   --t-theme: 0.5s ease-out;
+
+  --f-family-1: 'Montserrat';
+  --f-family-2: 'JetBrains Mono';
 }
 
 /* Semantic variables */
 :root {
   --primary-accent-color: var(--c-accent-1);
   --theme-transition: var(--t-theme);
+
+  --primary-font: var(--f-family-1);
+  --secondary-font: var(--f-family-2);
 }
 
 /* Semantic variables light / auto-light */
