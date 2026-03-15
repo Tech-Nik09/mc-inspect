@@ -10,10 +10,10 @@ const { isLoading } = storeToRefs(playerStore);
 <template>
   <header class="main-header" :class="{ loading: isLoading }">
     <nav class="main-nav">
-      <router-link :to="{ name: 'home' }">Home</router-link>
-      <router-link :to="{ name: 'players' }">Players</router-link>
-      <router-link :to="{ name: 'playerInfo', params: { playerName: 'examplename' } }">Example player</router-link>
-      <router-link :to="{ path: '/does-not-exist' }">URL that doesn't exist</router-link>
+      <router-link class="main-link" :to="{ name: 'home' }">Home</router-link>
+      <router-link class="main-link" :to="{ name: 'players' }">Players</router-link>
+      <router-link class="main-link" :to="{ name: 'playerInfo', params: { playerName: 'examplename' } }">Example player</router-link>
+      <router-link class="main-link" :to="{ path: '/does-not-exist' }">URL that doesn't exist</router-link>
     </nav>
 
     <ThemeSelection />
@@ -40,6 +40,34 @@ const { isLoading } = storeToRefs(playerStore);
   display: flex;
   gap: 2rem;
   align-items: center;
+}
+
+.main-link {
+  font-size: 1.3rem;
+
+  position: relative;
+}
+
+.main-link::after {
+  content: '';
+
+  width: 0;
+  height: 2px;
+
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+
+  background-color: var(--primary-accent-color);
+
+  transition:
+    left 0.5s ease-out,
+    width 0.5s ease-out;
+}
+
+.main-link:hover::after {
+  width: 100%;
+  left: 0;
 }
 
 .theme-selection {
