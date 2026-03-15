@@ -40,6 +40,8 @@ const { isLoading } = storeToRefs(playerStore);
 }
 
 .main-nav {
+  margin-left: 1rem;
+
   display: flex;
   gap: 2rem;
   align-items: center;
@@ -102,6 +104,10 @@ const { isLoading } = storeToRefs(playerStore);
 .github-link:hover .github-icon {
   color: var(--primary-accent-color);
   transform: translateY(-6px) scale(1.1);
+}
+
+.theme-selection {
+  margin-right: 1rem;
 }
 
 .loading {
