@@ -2,8 +2,6 @@
 
 <template>
   <h1>MC-Inspect</h1>
-  <p>Just some placeholder text for the landing page.</p>
-  <p>Route path: {{ $route.path }}</p>
 
   <h2>Licensing</h2>
   <p>This project uses third-party software components.</p>
