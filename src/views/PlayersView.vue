@@ -7,7 +7,7 @@ import FavoriteToggle from '@/components/FavoriteToggle.vue';
 import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
-const { isLoading, error } = storeToRefs(playerStore);
+const { error } = storeToRefs(playerStore);
 
 const favoritesStore = useFavoritesStore();
 const { favoritePlayers } = storeToRefs(favoritesStore);
@@ -20,8 +20,7 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
   <p>Route params: {{ $route.params }}</p>
 
   <PlayerSearchBar />
-  <p v-if="isLoading">Loading</p>
-  <p v-else-if="error">{{ error }}</p>
+  <p v-if="error">{{ error }}</p>
 
   <div v-if="favoritePlayers.length">
     <div v-for="player in favoritePlayers" :key="player.meta.id">

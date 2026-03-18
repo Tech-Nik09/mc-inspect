@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
-const { isLoading, data } = storeToRefs(playerStore);
+const { data } = storeToRefs(playerStore);
 
 const route = useRoute();
 const currentLocation = ref<string>('');
@@ -65,8 +65,6 @@ watch(
 
     <SkinView />
   </template>
-
-  <p v-if="isLoading">Loading</p>
 </template>
 
 <style scoped></style>
