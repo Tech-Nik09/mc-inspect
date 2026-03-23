@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation } from 'skinview3d';
 
 const playerStore = usePlayerStore();
-const { isLoading, data } = storeToRefs(playerStore);
+const { data } = storeToRefs(playerStore);
 
 const skinCanvas = useTemplateRef('skinCanvas');
 let skinViewer: SkinViewer;

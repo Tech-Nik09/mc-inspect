@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFileDownload } from '@/composables/downloadFileFromURL';
 
-const { isDownloading, downloadFileFromURL } = useFileDownload();
+const { downloadFileFromURL } = useFileDownload();
 
 const props = defineProps<{
   url: string;
@@ -11,9 +11,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <button :disabled="isDownloading" @click="downloadFileFromURL(props.url, props.filename)">
-    {{ isDownloading ? 'Downloading' : `Download ${props.label}` }}
-  </button>
+  <button @click="downloadFileFromURL(props.url, props.filename)">Download {{ props.label }}</button>
 </template>
 
 <style scoped></style>
