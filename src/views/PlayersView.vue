@@ -3,7 +3,6 @@ import { usePlayerStore } from '@/stores/player';
 import { useFavoritesStore } from '@/stores/favorites';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import PlayerFavoriteCard from '@/components/PlayerFavoriteCard.vue';
-import FavoriteToggle from '@/components/FavoriteToggle.vue';
 import { storeToRefs } from 'pinia';
 
 const playerStore = usePlayerStore();
@@ -20,9 +19,8 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
   <p v-if="error">{{ error }}</p>
 
   <div v-if="favoritePlayers.length">
-    <div v-for="player in favoritePlayers" :key="player.meta.id">
-      <PlayerFavoriteCard :data="player.data" />
-      <FavoriteToggle :id="player.meta.id" :type="player.meta.type" :data="player.data" />
+    <div v-for="favorite in favoritePlayers" :key="favorite.meta.id">
+      <PlayerFavoriteCard :favorite="favorite" />
     </div>
     <p>Current favorites: {{ favoritePlayers.length }}/10</p>
   </div>

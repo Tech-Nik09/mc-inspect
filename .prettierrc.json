@@ -3,5 +3,8 @@
   "semi": true,
   "singleQuote": true,
   "printWidth": 150,
-  "useTabs": false
+  "useTabs": false,
+
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/assets/main.css"
 }

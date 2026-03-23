@@ -1,19 +1,21 @@
 <script setup lang="ts">
+import FavoriteToggle from '@/components/FavoriteToggle.vue';
 import { useRouter } from 'vue-router';
-import type { Favorite } from '@/types';
+import type { FavoritePlayer } from '@/types';
 
 const router = useRouter();
 
 const props = defineProps<{
-  data: Favorite['data'];
+  favorite: FavoritePlayer;
 }>();
 </script>
 
 <template>
-  <div @click="router.push({ name: 'playerInfo', params: { playerName: data.name } })">
-    <img :src="`https://vzge.me/head/64/${data.skinId}.webp?no=shadow`" alt="" />
-    <p>Name: {{ data.name }}</p>
-    <p>UUID: {{ data.uuid }}</p>
+  <div @click="router.push({ name: 'playerInfo', params: { playerName: favorite.data.name } })">
+    <img :src="`https://vzge.me/head/64/${favorite.data.skinId}.webp?no=shadow`" alt="" />
+    <p>Name: {{ favorite.data.name }}</p>
+    <p>UUID: {{ favorite.data.uuid }}</p>
+    <FavoriteToggle @click.stop :id="favorite.meta.id" :type="favorite.meta.type" :data="favorite.data" />
   </div>
 </template>
 
