@@ -34,5 +34,3 @@ watch(isLoading, (loading) => {
   <input type="text" :disabled="isLoading" @keyup.enter="onQuery" v-model="query" ref="searchBar" />
   <button :disabled="isLoading" @click="onQuery">{{ isLoading ? 'loading' : 'Search' }}</button>
 </template>
-
-<style scoped></style>

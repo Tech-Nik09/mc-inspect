@@ -129,9 +129,3 @@ function setAnimation(): void {
     <p>Outer layer shown: {{ showOuterLayer }}</p>
   </div>
 </template>
-
-<style scoped>
-canvas {
-  background-color: rgb(220, 220, 220);
-}
-</style>

@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <h1>MC-Inspect</h1>
 
@@ -9,5 +7,3 @@
     <a href="https://github.com/Tech-Nik09/mc-inspect/blob/main/README.md" target="_blank">click here</a>
   </p>
 </template>
-
-<style scoped></style>

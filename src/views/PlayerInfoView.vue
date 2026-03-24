@@ -63,5 +63,3 @@ watch(
     <SkinView />
   </template>
 </template>
-
-<style scoped></style>

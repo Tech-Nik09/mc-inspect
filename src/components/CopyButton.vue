@@ -12,5 +12,3 @@ const props = defineProps<{
 <template>
   <button @click="copyToClipboard(props.text)">{{ isCopied ? 'Copied' : `Copy ${props.label}` }}</button>
 </template>
-
-<style scoped></style>

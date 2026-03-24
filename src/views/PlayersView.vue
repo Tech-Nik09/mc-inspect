@@ -26,5 +26,3 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
   </div>
   <p v-else>There are no favorites yet.</p>
 </template>
-
-<style scoped></style>

@@ -26,5 +26,3 @@ watch(
 
   <p>Theme: {{ theme }}</p>
 </template>
-
-<style scoped></style>
