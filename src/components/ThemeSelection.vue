@@ -1,36 +1,13 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { useColorMode, type BasicColorSchema } from '@vueuse/core';
 
-const themes = ['light', 'dark', 'auto'] as const;
-type Theme = (typeof themes)[number];
+const { store } = useColorMode();
 
-function isTheme(theme: any): theme is Theme {
-  return themes.includes(theme);
-}
-
-const savedTheme = localStorage.getItem('theme');
-const theme = ref<Theme>(isTheme(savedTheme) ? savedTheme : 'auto');
-
-const preferredThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-const prefersDark = ref<boolean>(preferredThemeQuery.matches);
-function changePreferrsDark(event: MediaQueryListEvent): void {
-  prefersDark.value = event.matches;
-}
-onMounted(() => preferredThemeQuery.addEventListener('change', changePreferrsDark));
-onUnmounted(() => preferredThemeQuery.removeEventListener('change', changePreferrsDark));
-
-watch(
-  [theme, prefersDark],
-  () => {
-    document.documentElement.classList.toggle('dark', theme.value === 'dark' || (theme.value === 'auto' && prefersDark.value));
-    localStorage.setItem('theme', theme.value);
-  },
-  { immediate: true },
-);
+const themes: BasicColorSchema[] = ['light', 'dark', 'auto'] as const;
 </script>
 
 <template>
-  <input v-for="option in themes" :key="option" type="radio" :value="option" v-model="theme" />
-
-  <p>Theme: {{ theme }}</p>
+  <div>
+    <input type="radio" v-for="theme in themes" :key="theme" :value="theme" v-model="store" />
+  </div>
 </template>
