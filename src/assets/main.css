@@ -6,3 +6,9 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --default-font-family: var(--font-mono);
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  @apply bg-white text-black dark:bg-black dark:text-white;
+}
