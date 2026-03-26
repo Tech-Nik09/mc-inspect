@@ -1,23 +1,16 @@
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
+import { useLocalStorage } from '@vueuse/core';
 import type { Favorite, FavoritePlayer, FavoriteServer } from '@/types';
 
 export const useFavoritesStore = defineStore('favorites', () => {
-  const favorites = ref<Favorite[]>(JSON.parse(localStorage.getItem('favorites') || '[]'));
+  const favorites = useLocalStorage<Favorite[]>('favorites', []);
 
   const favoritePlayers = computed(() => favorites.value.filter((e): e is FavoritePlayer => e.meta.type === 'player'));
   const favoriteServers = computed(() => favorites.value.filter((e): e is FavoriteServer => e.meta.type === 'server'));
 
   const atFavoritePlayersLimit = computed(() => favoritePlayers.value.length >= 10);
   const atFavoriteServersLimit = computed(() => favoriteServers.value.length >= 10);
-
-  watch(
-    favorites,
-    () => {
-      localStorage.setItem('favorites', JSON.stringify(favorites.value));
-    },
-    { deep: true },
-  );
 
   function isFavorite(id: Favorite['meta']['id']): boolean {
     return favorites.value.some((e) => e.meta.id === id);
