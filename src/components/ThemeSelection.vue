@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useColorMode, type BasicColorSchema } from '@vueuse/core';
 
-const { store } = useColorMode();
+const { store } = useColorMode({
+  storageKey: 'theme',
+});
 
 const themes: BasicColorSchema[] = ['light', 'dark', 'auto'] as const;
 </script>
