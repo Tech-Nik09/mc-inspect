@@ -4,7 +4,7 @@ import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
 import FavoriteToggle from '@/components/FavoriteToggle.vue';
-import { defineAsyncComponent, ref, watch } from 'vue';
+import { computed, defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
@@ -13,15 +13,7 @@ const playerStore = usePlayerStore();
 const { data } = storeToRefs(playerStore);
 
 const route = useRoute();
-const currentLocation = ref<string>('');
-
-watch(
-  route,
-  () => {
-    currentLocation.value = window.location.href;
-  },
-  { immediate: true },
-);
+const currentLocation = computed((): string => window.location.origin + route.fullPath);
 </script>
 
 <template>
@@ -63,5 +55,3 @@ watch(
     <SkinView />
   </template>
 </template>
-
-<style scoped></style>

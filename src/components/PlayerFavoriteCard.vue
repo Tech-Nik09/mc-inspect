@@ -18,5 +18,3 @@ const props = defineProps<{
     <FavoriteToggle @click.stop :id="favorite.meta.id" :type="favorite.meta.type" :data="favorite.data" />
   </div>
 </template>
-
-<style scoped></style>

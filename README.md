@@ -14,10 +14,11 @@ This project uses third-party software components and assets.
 
 ### Code
 
-- [vuejs](https://github.com/vuejs/core) - [MIT license](https://github.com/vuejs/core?tab=MIT-1-ov-file)
-- [vue-router](https://github.com/vuejs/router) - [MIT license](https://github.com/vuejs/router?tab=MIT-1-ov-file)
-- [pinia](https://github.com/vuejs/pinia) - [MIT license](https://github.com/vuejs/pinia?tab=MIT-1-ov-file)
-- [skinview3d](https://github.com/bs-community/skinview3d) - [MIT license](https://github.com/bs-community/skinview3d?tab=MIT-1-ov-file)
+- [vuejs](https://github.com/vuejs/core) - [MIT license](https://github.com/vuejs/core/blob/main/LICENSE)
+- [vue-router](https://github.com/vuejs/router) - [MIT license](https://github.com/vuejs/router/blob/main/LICENSE)
+- [pinia](https://github.com/vuejs/pinia) - [MIT license](https://github.com/vuejs/pinia/blob/v4/LICENSE)
+- [vueuse](https://github.com/vueuse/vueuse) - [MIT license](https://github.com/vueuse/vueuse/blob/main/LICENSE)
+- [skinview3d](https://github.com/bs-community/skinview3d) - [MIT license](https://github.com/bs-community/skinview3d/blob/master/LICENSE)
 
 ### Icons
 

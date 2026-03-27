@@ -28,5 +28,3 @@ const isDisabled = computed(() => atFavoritePlayersLimit.value && !isFavorite(pr
     {{ buttonLabel }}
   </button>
 </template>
-
-<style scoped></style>

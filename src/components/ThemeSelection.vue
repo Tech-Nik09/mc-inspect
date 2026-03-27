@@ -1,30 +1,15 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { useColorMode, type BasicColorSchema } from '@vueuse/core';
 
-const themes = ['light', 'dark', 'auto'] as const;
-type Theme = (typeof themes)[number];
+const { store } = useColorMode({
+  storageKey: 'theme',
+});
 
-function isTheme(theme: any): theme is Theme {
-  return themes.includes(theme);
-}
-
-const savedTheme = localStorage.getItem('theme');
-const theme = ref<Theme>(isTheme(savedTheme) ? savedTheme : 'auto');
-
-watch(
-  theme,
-  () => {
-    document.documentElement.setAttribute('data-theme', theme.value);
-    localStorage.setItem('theme', theme.value);
-  },
-  { immediate: true },
-);
+const themes: BasicColorSchema[] = ['light', 'dark', 'auto'] as const;
 </script>
 
 <template>
-  <input v-for="item in themes" :key="item" type="radio" :value="item" v-model="theme" />
-
-  <p>Theme: {{ theme }}</p>
+  <div>
+    <input type="radio" v-for="theme in themes" :key="theme" :value="theme" v-model="store" />
+  </div>
 </template>
-
-<style scoped></style>

@@ -13,5 +13,3 @@ const props = defineProps<{
 <template>
   <button @click="downloadFileFromURL(props.url, props.filename)">Download {{ props.label }}</button>
 </template>
-
-<style scoped></style>

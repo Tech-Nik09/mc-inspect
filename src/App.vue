@@ -17,10 +17,3 @@ import ThemeSelection from '@/components/ThemeSelection.vue';
     <router-view></router-view>
   </main>
 </template>
-
-<style scoped>
-nav {
-  display: flex;
-  flex-direction: column;
-}
-</style>
