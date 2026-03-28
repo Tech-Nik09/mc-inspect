@@ -5,10 +5,12 @@
   --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --default-font-family: var(--font-mono);
+
+  --color-accent: #d34556;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 body {
-  @apply bg-white text-black dark:bg-black dark:text-white;
+  @apply bg-white text-black dark:bg-gray-950 dark:text-white;
 }
