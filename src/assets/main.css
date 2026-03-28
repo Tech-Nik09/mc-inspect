@@ -11,6 +11,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@utility hover-smooth {
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
 body {
   @apply bg-white text-black dark:bg-gray-950 dark:text-white;
 }
