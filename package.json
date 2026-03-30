@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "@vueuse/components": "^14.2.1",
     "@vueuse/core": "^14.2.1",
     "pinia": "^3.0.4",
     "skinview3d": "^3.4.1",
