@@ -5,10 +5,35 @@
   --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --default-font-family: var(--font-mono);
+
+  --color-accent: #d34556;
+
+  --animate-loading: loading 1s linear infinite alternate;
+  @keyframes loading {
+    0% {
+      left: 0;
+      width: 5%;
+    }
+
+    50% {
+      left: 30%;
+      width: 40%;
+    }
+
+    100% {
+      left: 95%;
+      width: 5%;
+    }
+  }
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@utility hover-smooth {
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
 body {
-  @apply bg-white text-black dark:bg-black dark:text-white;
+  @apply bg-white text-black dark:bg-gray-950 dark:text-white;
 }

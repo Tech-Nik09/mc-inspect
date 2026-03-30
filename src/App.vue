@@ -1,18 +1,9 @@
 <script setup lang="ts">
-import ThemeSelection from '@/components/ThemeSelection.vue';
+import Header from '@/components/Header.vue';
 </script>
 
 <template>
-  <nav>
-    <div>
-      <router-link :to="{ name: 'home' }">Home</router-link>
-      <router-link :to="{ name: 'players' }">Players</router-link>
-      <router-link :to="{ name: 'playerInfo', params: { playerName: 'examplename' } }">Example player</router-link>
-      <router-link :to="{ path: '/does-not-exist' }">URL that doesn't exist</router-link>
-    </div>
-
-    <ThemeSelection />
-  </nav>
+  <Header />
   <main>
     <router-view></router-view>
   </main>
