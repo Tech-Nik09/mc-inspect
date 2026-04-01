@@ -1,6 +1,7 @@
 import { usePlayerStore } from '@/stores/player';
 import HomeView from '../views/HomeView.vue';
 import { createRouter, createWebHistory, type RouteLocationNamedRaw, type RouteLocationNormalizedGeneric } from 'vue-router';
+import { useDateFormat, useNow } from '@vueuse/core';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,15 @@ const router = createRouter({
   sensitive: true,
 });
 
+router.beforeEach(async (to) => {
+  if (to.name === 'playerInfo') return await handlePlayerRoute(to);
+});
+
+router.afterEach((to) => {
+  setTitle(to);
+  setFavicon(to);
+});
+
 async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<true | RouteLocationNamedRaw> {
   const playerStore = usePlayerStore();
 
@@ -49,16 +59,43 @@ async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<tr
   return newRoute;
 }
 
-router.beforeEach(async (to) => {
-  if (to.name === 'playerInfo') return await handlePlayerRoute(to);
-});
-
-router.afterEach((to) => {
+function setTitle(to: RouteLocationNormalizedGeneric): void {
   const baseTitle = 'mc-inspect';
   let routeTitle: string | null = typeof to.meta.title === 'string' ? to.meta.title : null;
   if (to.name === 'playerInfo') routeTitle = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? null;
 
   document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
-});
+}
+
+async function setFavicon(to: RouteLocationNormalizedGeneric): Promise<void> {
+  const version = useDateFormat(useNow(), 'YYYYMMDD');
+  const link = document.getElementById('dynamic-favicon');
+  if (!(link instanceof HTMLLinkElement)) return;
+
+  let icon = `/favicon.svg?v=${version.value}`;
+  let type = 'image/svg+xml';
+  let sizes: string | null = null;
+
+  if (to.name === 'playerInfo') {
+    const name = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
+    const url = `https://render.crafty.gg/2d/head/${name}?size=96`;
+
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      if (res.ok) {
+        icon = `${url}&v=${version.value}`;
+        type = 'image/png';
+        sizes = '96x96';
+      }
+    } catch (err) {
+      console.error(`Error while loading favicon from URL "${url}": ${err}`);
+    }
+  }
+
+  if (sizes) link.setAttribute('sizes', sizes);
+  else link.removeAttribute('sizes');
+  link.type = type;
+  link.href = icon;
+}
 
 export default router;
