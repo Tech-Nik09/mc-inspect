@@ -37,6 +37,14 @@ const router = createRouter({
   sensitive: true,
 });
 
+router.beforeEach(async (to) => {
+  if (to.name === 'playerInfo') return await handlePlayerRoute(to);
+});
+
+router.afterEach((to) => {
+  setTitle(to);
+});
+
 async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<true | RouteLocationNamedRaw> {
   const playerStore = usePlayerStore();
 
@@ -49,16 +57,12 @@ async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<tr
   return newRoute;
 }
 
-router.beforeEach(async (to) => {
-  if (to.name === 'playerInfo') return await handlePlayerRoute(to);
-});
-
-router.afterEach((to) => {
+function setTitle(to: RouteLocationNormalizedGeneric): void {
   const baseTitle = 'mc-inspect';
   let routeTitle: string | null = typeof to.meta.title === 'string' ? to.meta.title : null;
   if (to.name === 'playerInfo') routeTitle = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? null;
 
   document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
-});
+}
 
 export default router;
