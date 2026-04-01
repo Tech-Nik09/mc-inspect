@@ -22,7 +22,7 @@ const router = createRouter({
           component: () => import('@/views/PlayersView.vue'),
         },
         {
-          path: ':playerName',
+          path: ':playerQuery',
           name: 'playerInfo',
           component: () => import('@/views/PlayerInfoView.vue'),
         },
@@ -50,19 +50,20 @@ router.afterEach((to) => {
 async function handlePlayerRoute(to: RouteLocationNormalizedGeneric): Promise<true | RouteLocationNamedRaw> {
   const playerStore = usePlayerStore();
 
-  const playerName = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
+  const nameOrUuid = (Array.isArray(to.params.playerQuery) ? to.params.playerQuery[0] : to.params.playerQuery) ?? '';
+  if (nameOrUuid === playerStore.data?.uuid) return true;
 
-  if (playerName === playerStore.data?.name) return true;
-
-  playerStore.query = playerName;
+  playerStore.query = nameOrUuid;
   const newRoute = await playerStore.fetchPlayer();
   return newRoute;
 }
 
 function setTitle(to: RouteLocationNormalizedGeneric): void {
+  const playerStore = usePlayerStore();
+
   const baseTitle = 'mc-inspect';
   let routeTitle: string | null = typeof to.meta.title === 'string' ? to.meta.title : null;
-  if (to.name === 'playerInfo') routeTitle = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? null;
+  if (to.name === 'playerInfo') routeTitle = playerStore.data?.name ?? null;
 
   document.title = routeTitle ? `${routeTitle} | ${baseTitle}` : baseTitle;
 }
@@ -77,8 +78,8 @@ async function setFavicon(to: RouteLocationNormalizedGeneric): Promise<void> {
   let sizes: string | null = null;
 
   if (to.name === 'playerInfo') {
-    const name = (Array.isArray(to.params.playerName) ? to.params.playerName[0] : to.params.playerName) ?? '';
-    const url = `https://render.crafty.gg/2d/head/${name}?size=96`;
+    const nameOrUuid = (Array.isArray(to.params.playerQuery) ? to.params.playerQuery[0] : to.params.playerQuery) ?? '';
+    const url = `https://render.crafty.gg/2d/head/${nameOrUuid}?size=96`;
 
     try {
       const res = await fetch(url, { method: 'HEAD' });

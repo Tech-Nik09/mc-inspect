@@ -11,7 +11,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div @click="router.push({ name: 'playerInfo', params: { playerName: favorite.data.name } })">
+  <div @click="router.push({ name: 'playerInfo', params: { playerQuery: favorite.meta.id } })">
     <img :src="`https://render.crafty.gg/2d/head/${favorite.data.skinId}?size=96`" alt="" />
     <p>Name: {{ favorite.data.name }}</p>
     <p>UUID: {{ favorite.data.uuid }}</p>
