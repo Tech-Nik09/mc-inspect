@@ -43,7 +43,7 @@ export const usePlayerStore = defineStore('player', () => {
       const apiKey: string = import.meta.env.VITE_API_KEY;
       if (apiKey) headers['X-API-Key'] = apiKey;
 
-      const res = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${nameOrUuid}`, {
+      const res = await fetch(`https://api-mci.nkmlabs.de/players/${nameOrUuid}`, {
         headers,
       });
       if (!res.ok) return handleNameError(`Could not find player "${nameOrUuid}"`);
