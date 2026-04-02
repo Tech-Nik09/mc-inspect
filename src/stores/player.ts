@@ -1,3 +1,4 @@
+import { useFavoritesStore } from '@/stores/favorites';
 import { ref, toValue } from 'vue';
 import { defineStore } from 'pinia';
 import type { RouteLocationNamedRaw } from 'vue-router';
@@ -22,6 +23,8 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   async function fetchPlayer(): Promise<RouteLocationNamedRaw> {
+    const favoritesStore = useFavoritesStore();
+
     let loadingTimeout: number | undefined;
 
     try {
@@ -40,12 +43,14 @@ export const usePlayerStore = defineStore('player', () => {
       const apiKey: string = import.meta.env.VITE_API_KEY;
       if (apiKey) headers['X-API-Key'] = apiKey;
 
-      const res = await fetch(`https://mc-inspect-api.tech-nik09.workers.dev/players/${nameOrUuid}`, {
+      const res = await fetch(`https://api-mci.nkmlabs.de/players/${nameOrUuid}`, {
         headers,
       });
       if (!res.ok) return handleNameError(`Could not find player "${nameOrUuid}"`);
 
       const dat: Player = await res.json();
+
+      favoritesStore.updateFavorite(dat.uuid, 'player', { name: dat.name, uuid: dat.uuid, skinId: dat.skinId });
       data.value = dat;
       error.value = null;
       query.value = '';
