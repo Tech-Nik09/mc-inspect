@@ -1,3 +1,4 @@
+import { useFavoritesStore } from '@/stores/favorites';
 import { ref, toValue } from 'vue';
 import { defineStore } from 'pinia';
 import type { RouteLocationNamedRaw } from 'vue-router';
@@ -22,6 +23,8 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   async function fetchPlayer(): Promise<RouteLocationNamedRaw> {
+    const favoritesStore = useFavoritesStore();
+
     let loadingTimeout: number | undefined;
 
     try {
@@ -46,6 +49,8 @@ export const usePlayerStore = defineStore('player', () => {
       if (!res.ok) return handleNameError(`Could not find player "${nameOrUuid}"`);
 
       const dat: Player = await res.json();
+
+      favoritesStore.updateFavorite(dat.uuid, 'player', { name: dat.name, uuid: dat.uuid, skinId: dat.skinId });
       data.value = dat;
       error.value = null;
       query.value = '';

@@ -24,5 +24,12 @@ export const useFavoritesStore = defineStore('favorites', () => {
     }
   }
 
-  return { favoritePlayers, favoriteServers, atFavoritePlayersLimit, atFavoriteServersLimit, isFavorite, toggleFavorite };
+  function updateFavorite(id: Favorite['meta']['id'], type: Favorite['meta']['type'], data: Favorite['data']): void {
+    favorites.value = favorites.value.map((e) => {
+      if (e.meta.id === id) return { data, meta: { id, type } };
+      return e;
+    });
+  }
+
+  return { favorites, favoritePlayers, favoriteServers, atFavoritePlayersLimit, atFavoriteServersLimit, isFavorite, toggleFavorite, updateFavorite };
 });
