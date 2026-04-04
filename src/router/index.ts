@@ -85,7 +85,7 @@ async function setFavicon(to: RouteLocationNormalizedGeneric): Promise<void> {
       const res = await fetch(url, { method: 'HEAD' });
       if (res.ok) {
         icon = `${url}&v=${version.value}`;
-        type = 'image/png';
+        type = res.headers.get('Content-Type') || 'image/png';
         sizes = '96x96';
       }
     } catch (err) {
