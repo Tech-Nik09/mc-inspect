@@ -56,7 +56,7 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
       </OnClickOutside>
     </nav>
 
-    <a href="https://github.com/Tech-Nik09/mc-inspect" target="_blank" class="ml-auto size-fit">
+    <a href="https://github.com/nkmLABS/mc-inspect" target="_blank" class="ml-auto size-fit">
       <MdiGithub class="size-8 rounded-full transition-colors hover-smooth hover:text-accent" />
     </a>
 
