@@ -15,16 +15,16 @@ const props = defineProps<{
 }>();
 
 const buttonLabel = computed(() => {
-  if (isFavorite(props.id)) return 'Remove from favorites';
+  if (isFavorite(props.id)) return 'Remove favorite';
   else if (atFavoritePlayersLimit.value) return 'Cannot add more favorites';
-  else return 'Add to favorites';
+  else return 'Add favorite';
 });
 
 const isDisabled = computed(() => atFavoritePlayersLimit.value && !isFavorite(props.id));
 </script>
 
 <template>
-  <button :disabled="isDisabled" @click="toggleFavorite(props.id, props.type, props.data)">
+  <button :disabled="isDisabled" @click="toggleFavorite(props.id, props.type, props.data)" class="btn-primary">
     {{ buttonLabel }}
   </button>
 </template>
