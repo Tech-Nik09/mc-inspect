@@ -27,13 +27,21 @@
   }
 }
 
+@layer base {
+  body {
+    @apply bg-white text-black dark:bg-gray-950 dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply h-8 cursor-pointer rounded-full border-2 border-accent bg-accent px-2 font-sans font-bold text-nowrap text-white transition-colors hover-smooth hover:bg-white hover:text-black dark:text-gray-950 dark:hover:bg-gray-950 dark:hover:text-white;
+  }
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @utility hover-smooth {
   transition-duration: 200ms;
   transition-timing-function: ease-out;
-}
-
-body {
-  @apply bg-white text-black dark:bg-gray-950 dark:text-white;
 }

@@ -4,7 +4,9 @@ import Header from '@/components/Header.vue';
 
 <template>
   <Header />
-  <main>
-    <router-view></router-view>
+  <main class="m-2 flex justify-center sm:m-4">
+    <div class="max-w-400 grow">
+      <router-view></router-view>
+    </div>
   </main>
 </template>

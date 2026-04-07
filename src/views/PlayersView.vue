@@ -18,11 +18,11 @@ const { favoritePlayers } = storeToRefs(favoritesStore);
   <PlayerSearchBar />
   <p v-if="error">{{ error }}</p>
 
-  <div v-if="favoritePlayers.length">
-    <div v-for="favorite in favoritePlayers" :key="favorite.meta.id">
-      <PlayerFavoriteCard :favorite="favorite" />
+  <template v-if="favoritePlayers.length">
+    <div class="flex flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
+      <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite="favorite" />
     </div>
     <p>Current favorites: {{ favoritePlayers.length }}/10</p>
-  </div>
+  </template>
   <p v-else>There are no favorites yet.</p>
 </template>
