@@ -24,7 +24,7 @@ const isDisabled = computed(() => atFavoritePlayersLimit.value && !isFavorite(pr
 </script>
 
 <template>
-  <button :disabled="isDisabled" @click="toggleFavorite(props.id, props.type, props.data)" class="btn-primary">
+  <button :disabled="isDisabled" @click="toggleFavorite(id, type, data)" class="btn-primary">
     {{ buttonLabel }}
   </button>
 </template>

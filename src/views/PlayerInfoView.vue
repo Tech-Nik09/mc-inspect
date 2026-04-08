@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player';
+import { useFileDownload } from '@/composables/downloadFileFromURL';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
-import DownloadButton from '@/components/DownloadButton.vue';
 import FavoriteToggle from '@/components/FavoriteToggle.vue';
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
@@ -11,6 +11,8 @@ const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'
 
 const playerStore = usePlayerStore();
 const { data } = storeToRefs(playerStore);
+
+const { downloadFileFromURL } = useFileDownload();
 
 const route = useRoute();
 const currentLocation = computed((): string => window.location.origin + route.fullPath);
@@ -24,8 +26,8 @@ const currentLocation = computed((): string => window.location.origin + route.fu
   <template v-if="data">
     <div>
       <CopyButton :text="currentLocation" label="shareable link" />
-      <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
-      <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
+      <button @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)">Download Skin</button>
+      <button v-if="data.capeUrl" @click="downloadFileFromURL(data.capeUrl, `${data.name}_cape.png`)">Download Cape</button>
       <FavoriteToggle :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
     </div>
 

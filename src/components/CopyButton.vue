@@ -10,5 +10,5 @@ const props = defineProps<{
 </script>
 
 <template>
-  <button @click="copyToClipboard(props.text)">{{ isCopied ? 'Copied' : `Copy ${props.label}` }}</button>
+  <button @click="copyToClipboard(text)">{{ isCopied ? 'Copied' : `Copy ${label}` }}</button>
 </template>
