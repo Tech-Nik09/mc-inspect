@@ -15,7 +15,7 @@ const props = defineProps<{
     @click="router.push({ name: 'playerInfo', params: { playerQuery: favorite.meta.id } })"
     class="flex cursor-pointer rounded-2xl border-2 border-slate-300 font-sans font-bold dark:border-slate-600"
   >
-    <img :src="`https://render.crafty.gg/2d/head/${favorite.data.skinId}?size=96`" alt="" class="m-2 size-16 rounded-2xl lg:size-24" />
+    <img :src="`https://render.crafty.gg/2d/head/${favorite.data.uuid}?size=96`" alt="" class="m-2 size-16 rounded-2xl lg:size-24" />
 
     <div class="flex grow flex-col items-center justify-evenly border-l-2 border-slate-300 dark:border-slate-600">
       <p>{{ favorite.data.name }}</p>
