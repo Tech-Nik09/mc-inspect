@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useClipboard } from '@/composables/copyToClipboard';
+import { useClipboard } from '@/composables/clipboard';
 
 const { isCopied, copyToClipboard } = useClipboard();
 

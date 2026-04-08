@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player';
-import { useFileDownload } from '@/composables/downloadFileFromURL';
 import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import FavoriteToggle from '@/components/FavoriteToggle.vue';
+import { downloadFileFromURL } from '@/utils/downloadFileFromURL';
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -11,8 +11,6 @@ const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'
 
 const playerStore = usePlayerStore();
 const { data } = storeToRefs(playerStore);
-
-const { downloadFileFromURL } = useFileDownload();
 
 const route = useRoute();
 const currentLocation = computed((): string => window.location.origin + route.fullPath);
