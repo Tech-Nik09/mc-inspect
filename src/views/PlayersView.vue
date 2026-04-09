@@ -28,7 +28,7 @@ async function onQuery(): Promise<void> {
 
   <template v-if="favoritePlayers.length">
     <div class="flex flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
-      <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite="favorite" />
+      <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />
     </div>
     <p>Current favorites: {{ favoritePlayers.length }}/10</p>
   </template>

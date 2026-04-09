@@ -1,15 +1,23 @@
-export type Favorite = {
+export type Favorite = FavoritePlayer | FavoriteServer;
+
+export type FavoritePlayer = {
   meta: {
-    type: 'player' | 'server';
+    type: 'player';
     id: string;
   };
-  data: Record<string, string>;
+  data: {
+    name: string;
+    uuid: string;
+  };
 };
 
-export type FavoritePlayer = Favorite & {
-  meta: { type: 'player' };
-};
-
-export type FavoriteServer = Favorite & {
-  meta: { type: 'server' };
+export type FavoriteServer = {
+  meta: {
+    type: 'server';
+    id: string;
+  };
+  data: {
+    name: string;
+    uuid?: never;
+  };
 };

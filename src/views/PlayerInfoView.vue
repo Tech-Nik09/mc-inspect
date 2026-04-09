@@ -7,6 +7,7 @@ import { downloadFileFromURL } from '@/utils/downloadFileFromURL';
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import type { FavoritePlayer } from '@/types';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
@@ -14,12 +15,26 @@ const { isLoading, data, query } = storeToRefs(playerStore);
 
 const route = useRoute();
 const router = useRouter();
-const currentLocation = computed((): string => window.location.origin + route.fullPath);
+const currentLocation = computed<string>(() => window.location.origin + route.fullPath);
 
 async function onQuery(): Promise<void> {
   const newRoute = await playerStore.fetchPlayer();
   router.push(newRoute);
 }
+
+const currentPlayer = computed<FavoritePlayer | null>(() => {
+  if (!data.value) return null;
+  return {
+    meta: {
+      type: 'player',
+      id: data.value.uuid,
+    },
+    data: {
+      name: data.value.name,
+      uuid: data.value.uuid,
+    },
+  };
+});
 </script>
 
 <template>
@@ -32,7 +47,7 @@ async function onQuery(): Promise<void> {
       <CopyButton :text="currentLocation" label="shareable link" />
       <button @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)">Download Skin</button>
       <button v-if="data.capeUrl" @click="downloadFileFromURL(data.capeUrl, `${data.name}_cape.png`)">Download Cape</button>
-      <FavoriteToggle :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
+      <FavoriteToggle v-if="currentPlayer" :favorite="currentPlayer" />
     </div>
 
     <h2>Fetched player data</h2>

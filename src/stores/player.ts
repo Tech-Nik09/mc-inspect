@@ -1,14 +1,14 @@
 import { useFavoritesStore } from '@/stores/favorites';
 import { ref, toValue } from 'vue';
 import { defineStore } from 'pinia';
-import type { RouteLocationNamedRaw } from 'vue-router';
-import type { Player } from '@/types';
+import { type RouteLocationNamedRaw } from 'vue-router';
+import type { FavoritePlayer, Player } from '@/types';
 
 export const usePlayerStore = defineStore('player', () => {
-  const isLoading = ref(false);
+  const isLoading = ref<boolean>(false);
   const data = ref<Player | null>(null);
   const error = ref<string | null>(null);
-  const query = ref('');
+  const query = ref<string>('');
 
   function validateQuery(nameOrUuid: string): boolean {
     const nameCriteria = /^[a-zA-Z0-9_]{3,16}$/;
@@ -49,11 +49,21 @@ export const usePlayerStore = defineStore('player', () => {
       if (!res.ok) return handleNameError(`Could not find player "${nameOrUuid}"`);
 
       const dat: Player = await res.json();
-
-      favoritesStore.updateFavorite(dat.uuid, 'player', { name: dat.name, uuid: dat.uuid, skinId: dat.skinId });
       data.value = dat;
       error.value = null;
       query.value = '';
+
+      const currentPlayer: FavoritePlayer = {
+        meta: {
+          type: 'player',
+          id: dat.uuid,
+        },
+        data: {
+          name: dat.name,
+          uuid: dat.uuid,
+        },
+      };
+      favoritesStore.updateFavorite(currentPlayer);
 
       return { name: 'playerInfo', params: { playerQuery: dat.uuid } };
     } catch (err) {

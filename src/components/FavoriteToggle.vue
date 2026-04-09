@@ -5,26 +5,30 @@ import { storeToRefs } from 'pinia';
 import type { Favorite } from '@/types';
 
 const favoritesStore = useFavoritesStore();
-const { atFavoritePlayersLimit } = storeToRefs(favoritesStore);
-const { isFavorite, toggleFavorite } = favoritesStore;
+const { atFavoritePlayersLimit, atFavoriteServersLimit } = storeToRefs(favoritesStore);
+const { isFavorite, isPlayer, isServer, toggleFavorite } = favoritesStore;
 
 const props = defineProps<{
-  id: Favorite['meta']['id'];
-  type: Favorite['meta']['type'];
-  data: Favorite['data'];
+  favorite: Favorite;
 }>();
 
-const buttonLabel = computed(() => {
-  if (isFavorite(props.id)) return 'Remove favorite';
-  else if (atFavoritePlayersLimit.value) return 'Cannot add more favorites';
-  else return 'Add favorite';
+const buttonLabel = computed<string>(() => {
+  if (isFavorite(props.favorite)) return 'Remove favorite';
+  if ((isPlayer(props.favorite) && atFavoritePlayersLimit.value) || (isServer(props.favorite) && atFavoriteServersLimit.value))
+    return 'Limit reached';
+  return 'Add favorite';
 });
 
-const isDisabled = computed(() => atFavoritePlayersLimit.value && !isFavorite(props.id));
+const isDisabled = computed<boolean>(() => {
+  if (isFavorite(props.favorite)) return false;
+  if (isPlayer(props.favorite)) return atFavoritePlayersLimit.value;
+  if (isServer(props.favorite)) return atFavoriteServersLimit.value;
+  return true;
+});
 </script>
 
 <template>
-  <button :disabled="isDisabled" @click="toggleFavorite(id, type, data)" class="btn-primary">
+  <button :disabled="isDisabled" @click="toggleFavorite(favorite)" class="btn-primary">
     {{ buttonLabel }}
   </button>
 </template>
