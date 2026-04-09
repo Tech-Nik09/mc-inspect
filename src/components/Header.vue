@@ -9,7 +9,7 @@ import MdiGithub from '~icons/mdi/github';
 
 const playerStore = usePlayerStore();
 
-const isLoading = computed((): boolean => playerStore.isLoading);
+const isLoading = computed<boolean>(() => playerStore.isLoading);
 
 type Tab = {
   route: RouteLocationNamedRaw;
