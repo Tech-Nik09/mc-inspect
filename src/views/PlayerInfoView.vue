@@ -1,32 +1,53 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player';
-import PlayerSearchBar from '@/components/PlayerSearchBar.vue';
+import SearchBar from '@/components/SearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
-import DownloadButton from '@/components/DownloadButton.vue';
 import FavoriteToggle from '@/components/FavoriteToggle.vue';
+import { downloadFileFromURL } from '@/utils/downloadFileFromURL';
 import { computed, defineAsyncComponent } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import type { FavoritePlayer } from '@/types';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
-const { data } = storeToRefs(playerStore);
+const { isLoading, data, query } = storeToRefs(playerStore);
 
 const route = useRoute();
-const currentLocation = computed((): string => window.location.origin + route.fullPath);
+const router = useRouter();
+const currentLocation = computed<string>(() => window.location.origin + route.fullPath);
+
+async function onQuery(): Promise<void> {
+  const newRoute = await playerStore.fetchPlayer();
+  router.push(newRoute);
+}
+
+const currentPlayer = computed<FavoritePlayer | null>(() => {
+  if (!data.value) return null;
+  return {
+    meta: {
+      type: 'player',
+      id: data.value.uuid,
+    },
+    data: {
+      name: data.value.name,
+      uuid: data.value.uuid,
+    },
+  };
+});
 </script>
 
 <template>
   <h1>Player Info</h1>
 
-  <PlayerSearchBar />
+  <SearchBar @query="onQuery" :is-loading="isLoading" v-model="query" :placeholder="'Enter playername'" />
 
   <template v-if="data">
     <div>
       <CopyButton :text="currentLocation" label="shareable link" />
-      <DownloadButton :url="data.skinUrl" :filename="`${data.name}_skin.png`" label="Skin" />
-      <DownloadButton v-if="data.capeUrl" :url="data.capeUrl" :filename="`${data.name}_cape.png`" label="Cape" />
-      <FavoriteToggle :id="data.uuid" type="player" :data="{ name: data.name, uuid: data.uuid, skinId: data.skinId }" />
+      <button @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)">Download Skin</button>
+      <button v-if="data.capeUrl" @click="downloadFileFromURL(data.capeUrl, `${data.name}_cape.png`)">Download Cape</button>
+      <FavoriteToggle v-if="currentPlayer" :favorite="currentPlayer" />
     </div>
 
     <h2>Fetched player data</h2>

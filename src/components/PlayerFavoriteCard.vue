@@ -19,7 +19,7 @@ const props = defineProps<{
 
     <div class="flex grow flex-col items-center justify-evenly border-l-2 border-slate-300 dark:border-slate-600">
       <p>{{ favorite.data.name }}</p>
-      <FavoriteToggle @click.stop :id="favorite.meta.id" :type="favorite.meta.type" :data="favorite.data" />
+      <FavoriteToggle @click.stop :favorite />
     </div>
   </div>
 </template>
