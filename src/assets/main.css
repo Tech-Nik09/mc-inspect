@@ -43,7 +43,7 @@
   }
 
   .btn-primary:disabled {
-    @apply border-slate-300 bg-white text-slate-300 dark:border-slate-600 dark:bg-gray-950 dark:text-slate-600;
+    @apply border-slate-400 bg-white text-slate-400 dark:border-slate-600 dark:bg-gray-950 dark:text-slate-600;
   }
 }
 
