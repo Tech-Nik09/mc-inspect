@@ -30,9 +30,9 @@ onStartTyping(() => {
       :disabled="isLoading"
       :placeholder
       ref="searchBar"
-      class="w-full rounded-l-2xl border-2 border-r-0 border-accent px-4 text-lg outline-hidden placeholder:text-gray-500"
+      class="w-full rounded-l-2xl border-2 border-r-0 border-accent px-4 text-lg outline-hidden placeholder:text-slate-300 disabled:text-slate-300 dark:placeholder:text-slate-600 dark:disabled:text-slate-600"
     />
-    <button :disabled="isLoading" @click="query" class="btn-primary h-full w-20 rounded-l-none border-l-0">
+    <button :disabled="isLoading" @click="query" class="btn-primary h-full w-24 rounded-l-none px-0 disabled:border-accent">
       {{ isLoading ? 'loading' : 'Search' }}
     </button>
   </div>
