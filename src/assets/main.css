@@ -8,6 +8,8 @@
 
   --color-accent: #d34556;
 
+  --shadow-center-md: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+
   --animate-loading: loading 1s linear infinite alternate;
   @keyframes loading {
     0% {
@@ -35,7 +37,24 @@
 
 @layer components {
   .btn-primary {
-    @apply h-8 cursor-pointer rounded-2xl border-2 border-accent bg-accent px-2 font-sans font-bold text-nowrap text-white transition-colors hover-smooth hover:bg-white hover:text-black dark:text-gray-950 dark:hover:bg-gray-950 dark:hover:text-white;
+    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-accent px-2 font-sans font-bold text-nowrap text-white transition-colors hover-smooth dark:text-gray-950;
+  }
+
+  .btn-primary:hover {
+    @apply bg-white text-black dark:bg-gray-950 dark:text-white;
+  }
+
+  .btn-reverse {
+    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-white px-2 font-sans font-bold text-nowrap text-black transition-colors hover-smooth dark:bg-gray-950 dark:text-white;
+  }
+
+  .btn-reverse:hover {
+    @apply bg-accent text-white dark:text-gray-950;
+  }
+
+  .btn-primary:disabled,
+  .btn-reverse:disabled {
+    @apply border-slate-400 bg-white text-slate-400 dark:border-slate-600 dark:bg-gray-950 dark:text-slate-600;
   }
 }
 

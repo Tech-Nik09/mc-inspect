@@ -16,7 +16,7 @@ export const usePlayerStore = defineStore('player', () => {
     return nameCriteria.test(nameOrUuid) || uuidCriteria.test(nameOrUuid);
   }
 
-  function handleNameError(err: string): RouteLocationNamedRaw {
+  function handleNameError(err: string | null): RouteLocationNamedRaw {
     error.value = err;
     data.value = null;
     return { name: 'players' };
@@ -35,9 +35,9 @@ export const usePlayerStore = defineStore('player', () => {
       query.value = query.value.trim();
       let nameOrUuid = toValue(query);
 
-      if (!nameOrUuid) return handleNameError('Playername cannot be empty');
+      if (!nameOrUuid) return handleNameError(null);
 
-      if (!validateQuery(nameOrUuid)) return handleNameError(`Invalid player name "${nameOrUuid}"`);
+      if (!validateQuery(nameOrUuid)) return handleNameError(`Invalid player name or UUID`);
 
       const headers: Record<string, string> = {};
       const apiKey: string = import.meta.env.VITE_API_KEY;
@@ -46,7 +46,7 @@ export const usePlayerStore = defineStore('player', () => {
       const res = await fetch(`https://mc-inspect-api.buildbynik.dev/players/${nameOrUuid}`, {
         headers,
       });
-      if (!res.ok) return handleNameError(`Could not find player "${nameOrUuid}"`);
+      if (!res.ok) return handleNameError(`Could not find player`);
 
       const dat: Player = await res.json();
       data.value = dat;
