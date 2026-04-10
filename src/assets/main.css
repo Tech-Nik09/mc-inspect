@@ -37,7 +37,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-accent px-2 font-sans font-bold text-nowrap text-white transition-colors hover-smooth dark:text-gray-950;
+    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-accent px-2 font-sans font-bold text-nowrap text-white transition-[background-color,color] hover-smooth dark:text-gray-950;
   }
 
   .btn-primary:hover {
@@ -45,7 +45,7 @@
   }
 
   .btn-reverse {
-    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-white px-2 font-sans font-bold text-nowrap text-black transition-colors hover-smooth dark:bg-gray-950 dark:text-white;
+    @apply inline-flex h-8 cursor-pointer items-center justify-center rounded-2xl border-2 border-accent bg-white px-2 font-sans font-bold text-nowrap text-black transition-[background-color,color] hover-smooth dark:bg-gray-950 dark:text-white;
   }
 
   .btn-reverse:hover {

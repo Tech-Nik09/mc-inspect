@@ -34,7 +34,7 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
         v-for="tab in tabs"
         :key="tab.route.name"
         :to="tab.route"
-        class="router-link-lg relative transition-colors hover-smooth hover:text-accent"
+        class="router-link-lg relative transition-[color] hover-smooth hover:text-accent"
         >{{ tab.label }}</router-link
       >
     </nav>
@@ -57,7 +57,7 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
     </nav>
 
     <a href="https://github.com/nkmLABS/mc-inspect" target="_blank" class="ml-auto size-fit rounded-full">
-      <MdiGithub class="size-8 rounded-full transition-colors hover-smooth hover:text-accent" />
+      <MdiGithub class="size-8 rounded-full transition-[color] hover-smooth hover:text-accent" />
     </a>
 
     <ThemeSelection />
