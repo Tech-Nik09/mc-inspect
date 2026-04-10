@@ -22,7 +22,7 @@ onStartTyping(() => {
 </script>
 
 <template>
-  <div class="flex h-12 max-w-lg">
+  <div class="flex h-12 w-full max-w-lg rounded-2xl shadow-center-md shadow-accent">
     <input
       type="text"
       @keyup.enter="query"

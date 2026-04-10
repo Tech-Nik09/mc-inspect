@@ -8,6 +8,8 @@
 
   --color-accent: #d34556;
 
+  --shadow-center-md: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+
   --animate-loading: loading 1s linear infinite alternate;
   @keyframes loading {
     0% {
