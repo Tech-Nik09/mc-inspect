@@ -21,10 +21,12 @@ async function onQuery(): Promise<void> {
 </script>
 
 <template>
-  <h1>Players</h1>
+  <div class="mt-8 mb-6 flex flex-col items-center gap-4 sm:mt-16 sm:mb-12">
+    <h1 class="font-sans text-4xl font-bold">Skinviewer</h1>
 
-  <SearchBar @query="onQuery" :is-loading="isLoading" v-model="query" :placeholder="'Enter playername'" />
-  <p v-if="error">{{ error }}</p>
+    <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
+    <p v-if="error">{{ error }}</p>
+  </div>
 
   <template v-if="favoritePlayers.length">
     <div class="flex flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">

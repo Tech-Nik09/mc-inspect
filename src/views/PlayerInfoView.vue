@@ -40,7 +40,7 @@ const currentPlayer = computed<FavoritePlayer | null>(() => {
 <template>
   <h1>Player Info</h1>
 
-  <SearchBar @query="onQuery" :is-loading="isLoading" v-model="query" :placeholder="'Enter playername'" />
+  <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
 
   <template v-if="data">
     <div>
