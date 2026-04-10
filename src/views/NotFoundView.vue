@@ -32,7 +32,7 @@ watch(
 </script>
 
 <template>
-  <div class="mt-16 flex flex-col items-center gap-4">
+  <div class="mt-8 flex flex-col items-center gap-4 sm:mt-16">
     <h1 class="font-sans text-4xl font-bold">404</h1>
 
     <div class="flex w-full max-w-lg flex-col items-center gap-4 rounded-2xl border-2 border-accent p-4 shadow-center-md shadow-accent">
