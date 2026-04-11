@@ -34,16 +34,19 @@ async function onQuery(): Promise<void> {
   <section class="relative mt-8 flex flex-col items-center gap-4 sm:mt-16">
     <div class="text-center">
       <h2 class="font-sans text-2xl font-bold">Favorites</h2>
-      <p class="inline rounded-sm bg-slate-200 px-1 sm:absolute sm:top-1 sm:right-0 dark:bg-slate-800">
+      <p v-if="favoritePlayers.length" class="inline rounded-sm bg-slate-200 px-1 sm:absolute sm:top-1 sm:right-0 dark:bg-slate-800">
         {{ favoritePlayers.length }}/{{ maxFavoritePlayers }}
       </p>
     </div>
 
-    <template v-if="favoritePlayers">
-      <div class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
-        <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />
+    <div v-if="favoritePlayers.length" class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
+      <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />
+    </div>
+    <div v-else class="flex w-full max-w-lg flex-col items-center gap-4 rounded-2xl border-2 border-accent p-4 shadow-center-md shadow-accent">
+      <div class="text-center">
+        <p>No favorites here.</p>
+        <p>Search for players to add them to your favorites.</p>
       </div>
-    </template>
-    <p v-else>Search for players to save them as favorite</p>
+    </div>
   </section>
 </template>
