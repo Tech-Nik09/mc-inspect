@@ -11,6 +11,7 @@ const { isLoading, error, query } = storeToRefs(playerStore);
 
 const favoritesStore = useFavoritesStore();
 const { favoritePlayers } = storeToRefs(favoritesStore);
+const { maxFavoritePlayers } = favoritesStore;
 
 const router = useRouter();
 
@@ -21,18 +22,28 @@ async function onQuery(): Promise<void> {
 </script>
 
 <template>
-  <div class="mt-8 mb-6 flex flex-col items-center gap-4 sm:mt-16 sm:mb-12">
+  <section class="mt-8 mb-6 flex flex-col items-center gap-4 sm:mt-16 sm:mb-12">
     <h1 class="font-sans text-4xl font-bold">Skinviewer</h1>
 
     <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
     <p v-if="error">{{ error }}</p>
-  </div>
+  </section>
 
-  <template v-if="favoritePlayers.length">
-    <div class="flex flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
-      <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />
+  <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />
+
+  <section class="relative mt-8 flex flex-col items-center gap-4 sm:mt-16">
+    <div class="text-center">
+      <h2 class="font-sans text-2xl font-bold">Favorites</h2>
+      <p class="inline rounded-sm bg-slate-200 px-1 sm:absolute sm:top-1 sm:right-0 dark:bg-slate-800">
+        {{ favoritePlayers.length }}/{{ maxFavoritePlayers }}
+      </p>
     </div>
-    <p>Current favorites: {{ favoritePlayers.length }}/10</p>
-  </template>
-  <p v-else>There are no favorites yet.</p>
+
+    <template v-if="favoritePlayers">
+      <div class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
+        <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />
+      </div>
+    </template>
+    <p v-else>Search for players to save them as favorite</p>
+  </section>
 </template>
