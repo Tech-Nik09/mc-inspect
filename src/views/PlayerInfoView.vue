@@ -3,7 +3,7 @@ import { usePlayerStore } from '@/stores/player';
 import SearchBar from '@/components/SearchBar.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import FavoriteToggle from '@/components/FavoriteToggle.vue';
-import { downloadFileFromURL } from '@/utils/downloadFileFromURL';
+import { downloadFileFromURL } from '@/utils/download';
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';

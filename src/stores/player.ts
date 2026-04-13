@@ -35,9 +35,9 @@ export const usePlayerStore = defineStore('player', () => {
       query.value = query.value.trim();
       let nameOrUuid = toValue(query);
 
-      if (!nameOrUuid) return handleNameError(null);
+      if (!nameOrUuid) return handleNameError('Name cannot be empty');
 
-      if (!validateQuery(nameOrUuid)) return handleNameError(`Invalid player name or UUID`);
+      if (!validateQuery(nameOrUuid)) return handleNameError(`Invalid name or UUID`);
 
       const headers: Record<string, string> = {};
       const apiKey: string = import.meta.env.VITE_API_KEY;
