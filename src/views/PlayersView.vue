@@ -25,8 +25,7 @@ async function onQuery(): Promise<void> {
   <section class="mt-8 mb-6 flex flex-col items-center gap-4 sm:mt-16 sm:mb-12">
     <h1 class="font-sans text-4xl font-bold">Skinviewer</h1>
 
-    <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
-    <p v-if="error">{{ error }}</p>
+    <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" :error />
   </section>
 
   <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />

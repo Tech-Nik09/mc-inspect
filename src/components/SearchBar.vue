@@ -5,6 +5,7 @@ import { onStartTyping } from '@vueuse/core';
 const props = defineProps<{
   isLoading: boolean;
   placeholder?: string;
+  error?: string | null;
 }>();
 
 const emit = defineEmits(['query']);
@@ -22,7 +23,7 @@ onStartTyping(() => {
 </script>
 
 <template>
-  <div class="flex h-12 w-full max-w-lg rounded-2xl shadow-center-md shadow-accent">
+  <div class="relative flex h-14 w-full max-w-lg rounded-2xl shadow-center-md shadow-accent">
     <input
       type="text"
       @keyup.enter="query"
@@ -35,5 +36,8 @@ onStartTyping(() => {
     <button :disabled="isLoading" @click="query" class="btn-primary h-full w-24 rounded-l-none px-0 disabled:border-accent">
       {{ isLoading ? 'loading' : 'Search' }}
     </button>
+    <p v-if="error" class="absolute top-0.5 left-5 text-xs font-bold text-accent">
+      {{ error }}
+    </p>
   </div>
 </template>
