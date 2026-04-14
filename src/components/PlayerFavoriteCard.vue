@@ -21,7 +21,7 @@ const props = defineProps<{
       class="transition[border-color] flex grow flex-col items-center justify-evenly border-l-2 border-slate-400 hover-smooth group-hover:border-accent dark:border-slate-600"
     >
       <p class="font-sans text-lg font-bold">{{ favorite.data.name }}</p>
-      <FavoriteToggle @click.stop :favorite />
+      <FavoriteToggle @click.stop :favorite class="btn-primary" />
     </div>
   </div>
 </template>

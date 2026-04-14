@@ -38,17 +38,27 @@ const currentPlayer = computed<FavoritePlayer | null>(() => {
 </script>
 
 <template>
-  <h1>Player Info</h1>
-
-  <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
-
   <template v-if="data">
-    <div>
-      <CopyButton :text="currentLocation" label="shareable link" />
-      <button @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)">Download Skin</button>
-      <button v-if="data.capeUrl" @click="downloadFileFromURL(data.capeUrl, `${data.name}_cape.png`)">Download Cape</button>
-      <FavoriteToggle v-if="currentPlayer" :favorite="currentPlayer" />
-    </div>
+    <section class="mt-8 mb-6 flex flex-col items-center gap-4 sm:mt-16 sm:mb-12">
+      <h1 class="font-sans text-4xl font-bold">Skinviewer</h1>
+
+      <SearchBar @query="onQuery" :is-loading v-model="query" placeholder="Enter playername" />
+
+      <div class="flex w-full max-w-lg flex-col gap-2 sm:grid sm:grid-cols-2 sm:gap-4">
+        <FavoriteToggle v-if="currentPlayer" :favorite="currentPlayer" class="btn-reverse" />
+        <CopyButton :text="currentLocation" label="link" class="btn-reverse" />
+
+        <button @click="downloadFileFromURL(data.skinUrl, `${data.name}_skin.png`)" class="btn-reverse">Download Skin</button>
+        <button v-if="data.capeUrl" @click="downloadFileFromURL(data.capeUrl, `${data.name}_cape.png`)" class="btn-reverse">Download Cape</button>
+        <button v-else disabled class="btn-reverse hidden sm:inline">Download Cape</button>
+      </div>
+    </section>
+
+    <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />
+
+    <section class="relative mt-8 flex flex-col items-center gap-4 sm:mt-16">
+      <h2 class="font-sans text-2xl font-bold">{{ data.name }}</h2>
+    </section>
 
     <h2>Fetched player data</h2>
     <div>

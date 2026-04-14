@@ -28,7 +28,7 @@ const isDisabled = computed<boolean>(() => {
 </script>
 
 <template>
-  <button :disabled="isDisabled" @click="toggleFavorite(favorite)" class="btn-primary">
+  <button :disabled="isDisabled" @click="toggleFavorite(favorite)">
     {{ buttonLabel }}
   </button>
 </template>
