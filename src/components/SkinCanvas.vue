@@ -16,14 +16,14 @@ let skinViewer: SkinViewer;
 const showOuterLayer = ref(true);
 const hasCape = ref(false);
 
-const equipmentType = ref<null | 'cape' | 'elytra'>('cape');
 const equipmentOptions = {
   noEquipment: { value: null, label: 'No equipment' },
   cape: { value: 'cape', label: 'Cape' },
   elytra: { value: 'elytra', label: 'Elytra' },
 } as const;
+type EquipmentType = (typeof equipmentOptions)[keyof typeof equipmentOptions]['value'];
+const equipmentType = ref<EquipmentType>('cape');
 
-const animationType = ref<null | 'idle' | 'walking' | 'crouching' | 'flying'>('idle');
 const animationOptions = {
   noAnimation: { value: null, label: 'No animation' },
   idle: { value: 'idle', label: 'Idle' },
@@ -31,6 +31,8 @@ const animationOptions = {
   crouching: { value: 'crouching', label: 'Crouch' },
   flying: { value: 'flying', label: 'Fly' },
 } as const;
+type AnimationType = (typeof animationOptions)[keyof typeof animationOptions]['value'];
+const animationType = ref<AnimationType>('idle');
 
 onMounted(() => {
   if (!skinCanvas.value) return;
