@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player';
-import { onBeforeUnmount, onMounted, ref, useTemplateRef, watchEffect } from 'vue';
+import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useElementSize } from '@vueuse/core';
 import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation } from 'skinview3d';
 
 const playerStore = usePlayerStore();
 const { data } = storeToRefs(playerStore);
 
 const skinCanvas = useTemplateRef('skinCanvas');
+const skinCanvasContainer = useTemplateRef('skinCanvasContainer');
+const { width, height } = useElementSize(skinCanvasContainer);
 let skinViewer: SkinViewer;
 
 const showOuterLayer = ref(true);
@@ -34,11 +37,15 @@ onMounted(() => {
 
   skinViewer = new SkinViewer({
     canvas: skinCanvas.value,
-    width: 300,
-    height: 400,
+    width: width.value || 300,
+    height: height.value || 400,
     zoom: 0.7,
   });
   skinViewer.controls.enableZoom = false;
+
+  watch([width, height], ([newWidth, newHeight]) => {
+    skinViewer.setSize(newWidth, newHeight);
+  });
 
   watchEffect(() => {
     setSkin();
@@ -101,7 +108,9 @@ function setAnimation(): void {
 </script>
 
 <template>
-  <canvas ref="skinCanvas"></canvas>
+  <div class="relative aspect-3/4 w-full max-w-lg rounded-2xl border-2 border-slate-400 dark:border-slate-600" ref="skinCanvasContainer">
+    <canvas ref="skinCanvas" class="absolute top-0 left-0"></canvas>
+  </div>
 
   <div v-if="hasCape">
     <label v-for="(option, key) in equipmentOptions" :key="key">
