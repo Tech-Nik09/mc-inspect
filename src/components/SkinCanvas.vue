@@ -24,14 +24,55 @@ type EquipmentStyle = (typeof equipmentOptions)[keyof typeof equipmentOptions]['
 const equipmentStyle = ref<EquipmentStyle>('cape');
 
 const animationOptions = {
-  noAnimation: { value: null, label: 'No animation' },
-  idle: { value: 'idle', label: 'Idle' },
-  walking: { value: 'walking', label: 'Walk' },
-  crouching: { value: 'crouching', label: 'Crouch' },
-  flying: { value: 'flying', label: 'Fly' },
+  noAnimation: {
+    value: {
+      setAnimation(): void {
+        skinViewer.animation = null;
+      },
+    },
+    label: 'No animation',
+  },
+  idle: {
+    value: {
+      setAnimation(): void {
+        skinViewer.animation = new IdleAnimation();
+      },
+    },
+    label: 'Idle',
+  },
+  walking: {
+    value: {
+      setAnimation(): void {
+        skinViewer.animation = new WalkingAnimation();
+      },
+    },
+    label: 'Walk',
+  },
+  crouching: {
+    value: {
+      setAnimation(): void {
+        const newAnimation = new CrouchAnimation();
+        newAnimation.runOnce = true;
+        skinViewer.animation = newAnimation;
+      },
+    },
+    label: 'Crouch',
+  },
+  flying: {
+    value: {
+      setAnimation(): void {
+        skinViewer.animation = new FlyingAnimation();
+      },
+    },
+    label: 'Fly',
+  },
 } as const;
 type AnimationStyle = (typeof animationOptions)[keyof typeof animationOptions]['value'];
-const animationStyle = ref<AnimationStyle>('idle');
+const animationStyle = ref<AnimationStyle>({
+  setAnimation() {
+    skinViewer.animation = new IdleAnimation();
+  },
+});
 
 onMounted(() => {
   if (!skinCanvas.value) return;
@@ -69,25 +110,7 @@ onMounted(() => {
   watch(
     animationStyle,
     (newAnimationStyle) => {
-      let newAnimation: IdleAnimation | WalkingAnimation | CrouchAnimation | FlyingAnimation | null;
-      switch (newAnimationStyle) {
-        case 'idle':
-          newAnimation = new IdleAnimation();
-          break;
-        case 'walking':
-          newAnimation = new WalkingAnimation();
-          break;
-        case 'crouching':
-          newAnimation = new CrouchAnimation();
-          newAnimation.runOnce = true;
-          break;
-        case 'flying':
-          newAnimation = new FlyingAnimation();
-          break;
-        default:
-          newAnimation = null;
-      }
-      skinViewer.animation = newAnimation;
+      newAnimationStyle.setAnimation();
     },
     { immediate: true },
   );
