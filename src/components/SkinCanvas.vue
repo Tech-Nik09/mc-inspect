@@ -3,7 +3,7 @@ import { usePlayerStore } from '@/stores/player';
 import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useElementSize } from '@vueuse/core';
-import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation } from 'skinview3d';
+import { SkinViewer, IdleAnimation, WalkingAnimation, CrouchAnimation, FlyingAnimation, PlayerAnimation } from 'skinview3d';
 
 const playerStore = usePlayerStore();
 const { data } = storeToRefs(playerStore);
@@ -15,64 +15,27 @@ let skinViewer: SkinViewer;
 
 const showOuterLayer = ref(true);
 
+type EquipmentOptions = { [key: string]: { equipment: null | string; label: string } };
 const equipmentOptions = {
-  noEquipment: { value: null, label: 'No equipment' },
-  cape: { value: 'cape', label: 'Cape' },
-  elytra: { value: 'elytra', label: 'Elytra' },
-} as const;
-type EquipmentStyle = (typeof equipmentOptions)[keyof typeof equipmentOptions]['value'];
-const equipmentStyle = ref<EquipmentStyle>('cape');
+  noEquipment: { equipment: null, label: 'No equipment' },
+  cape: { equipment: 'cape', label: 'Cape' },
+  elytra: { equipment: 'elytra', label: 'Elytra' },
+} as const satisfies EquipmentOptions;
 
+type AnimationOptions = { [key: string]: { animation: null | PlayerAnimation; label: string } };
 const animationOptions = {
-  noAnimation: {
-    value: {
-      setAnimation(): void {
-        skinViewer.animation = null;
-      },
-    },
-    label: 'No animation',
-  },
-  idle: {
-    value: {
-      setAnimation(): void {
-        skinViewer.animation = new IdleAnimation();
-      },
-    },
-    label: 'Idle',
-  },
-  walking: {
-    value: {
-      setAnimation(): void {
-        skinViewer.animation = new WalkingAnimation();
-      },
-    },
-    label: 'Walk',
-  },
-  crouching: {
-    value: {
-      setAnimation(): void {
-        const newAnimation = new CrouchAnimation();
-        newAnimation.runOnce = true;
-        skinViewer.animation = newAnimation;
-      },
-    },
-    label: 'Crouch',
-  },
-  flying: {
-    value: {
-      setAnimation(): void {
-        skinViewer.animation = new FlyingAnimation();
-      },
-    },
-    label: 'Fly',
-  },
-} as const;
-type AnimationStyle = (typeof animationOptions)[keyof typeof animationOptions]['value'];
-const animationStyle = ref<AnimationStyle>({
-  setAnimation() {
-    skinViewer.animation = new IdleAnimation();
-  },
-});
+  noAnimation: { animation: null, label: 'No animation' },
+  idle: { animation: new IdleAnimation(), label: 'Idle' },
+  walking: { animation: new WalkingAnimation(), label: 'Walk' },
+  crouching: { animation: Object.assign(new CrouchAnimation(), { runOnce: true }), label: 'Crouch' },
+  flying: { animation: new FlyingAnimation(), label: 'Fly' },
+} as const satisfies AnimationOptions;
+
+type EquipmentKey = keyof typeof equipmentOptions;
+const equipmentKey = ref<EquipmentKey>('cape');
+
+type AnimationKey = keyof typeof animationOptions;
+const animationKey = ref<AnimationKey>('idle');
 
 onMounted(() => {
   if (!skinCanvas.value) return;
@@ -86,14 +49,15 @@ onMounted(() => {
   skinViewer.controls.enableZoom = false;
 
   watch(
-    [data, equipmentStyle],
-    ([newData, newEquipmentStyle]) => {
+    [data, equipmentKey],
+    ([newData, newEquipmentKey]) => {
       if (!newData) return;
 
       skinViewer.loadSkin(newData.skinUrl);
 
-      if (newEquipmentStyle && newData.capeUrl) {
-        skinViewer.loadCape(newData.capeUrl, { backEquipment: newEquipmentStyle });
+      const backEquipment = equipmentOptions[newEquipmentKey].equipment;
+      if (backEquipment && newData.capeUrl) {
+        skinViewer.loadCape(newData.capeUrl, { backEquipment });
       } else {
         skinViewer.loadCape(null);
       }
@@ -108,9 +72,9 @@ onMounted(() => {
   );
 
   watch(
-    animationStyle,
-    (newAnimationStyle) => {
-      newAnimationStyle.setAnimation();
+    animationKey,
+    (newAnimationKey) => {
+      skinViewer.animation = animationOptions[newAnimationKey].animation;
     },
     { immediate: true },
   );
@@ -136,7 +100,7 @@ onBeforeUnmount(() => {
 
   <div v-if="data?.capeUrl">
     <label v-for="(option, key) in equipmentOptions" :key>
-      <input type="radio" :value="option.value" v-model="equipmentStyle" />
+      <input type="radio" :value="key" v-model="equipmentKey" />
       {{ option.label }}
     </label>
 
@@ -145,7 +109,7 @@ onBeforeUnmount(() => {
 
   <div>
     <label v-for="(option, key) in animationOptions" :key>
-      <input type="radio" :value="option.value" v-model="animationStyle" />
+      <input type="radio" :value="key" v-model="animationKey" />
       {{ option.label }}
     </label>
 
