@@ -7,23 +7,25 @@ type Link = {
   text: string;
 };
 const links: Record<string, Link> = {
-  association: { href: 'https://github.com/nkmLABS/mc-inspect/blob/main/README.md', text: 'Not associated with Mojang in any way' },
-  licensing: { href: 'https://github.com/nkmLABS/mc-inspect/blob/main/README.md', text: 'Third-party software components and assets' },
+  association: { href: 'https://github.com/nkmLABS/mc-inspect/blob/main/README.md', text: 'Not associated with Mojang' },
+  licensing: { href: 'https://github.com/nkmLABS/mc-inspect/blob/main/README.md', text: 'Third-party software components' },
 } as const;
 </script>
 
 <template>
-  <footer class="mt-8 flex flex-col items-center gap-2 border-t-2 border-slate-400 px-2 py-6 text-sm sm:px-4 dark:border-slate-600">
-    <div>
-      <a v-for="(link, key) in links" :key :href="link.href" target="_blank" class="flex items-center gap-1">
-        <p>{{ link.text }}</p>
-        <MdiExternalLink class="size-4 text-accent" />
+  <footer
+    class="mt-8 grid grid-cols-1 place-items-center items-center gap-y-4 border-t-2 border-slate-400 px-2 py-6 text-xs sm:px-4 md:grid-cols-3 dark:border-slate-600"
+  >
+    <div class="md:place-self-start">
+      <a v-for="(link, key) in links" :key :href="link.href" target="_blank" class="block w-fit hover-smooth hover:text-accent">
+        {{ link.text }}
+        <MdiExternalLink class="inline-block size-3.5 align-text-top text-accent" />
       </a>
     </div>
 
-    <div class="flex items-center gap-1">
-      <MdiCopyright class="size-4" />
-      <p>2026 Niklas Maroldt</p>
+    <div>
+      <MdiCopyright class="inline-block size-3.5 align-text-top" />
+      2026 Niklas Maroldt
     </div>
   </footer>
 </template>
