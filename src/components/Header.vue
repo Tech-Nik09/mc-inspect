@@ -6,6 +6,8 @@ import { type RouteLocationNamedRaw } from 'vue-router';
 import { useToggle } from '@vueuse/core';
 import { OnClickOutside } from '@vueuse/components';
 import MdiGithub from '~icons/mdi/github';
+import MaterialSymbolsKeyboardArrowDownRounded from '~icons/material-symbols/keyboard-arrow-down-rounded';
+import MaterialSymbolsKeyboardArrowUpRounded from '~icons/material-symbols/keyboard-arrow-up-rounded';
 
 const playerStore = usePlayerStore();
 
@@ -40,7 +42,13 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
     </nav>
     <nav class="relative grow sm:hidden">
       <OnClickOutside @trigger="toggleDropdown(false)">
-        <button @click="toggleDropdown()" class="h-8 w-full cursor-pointer rounded-full bg-slate-200 dark:bg-slate-800">Menu</button>
+        <button @click="toggleDropdown()" class="h-8 w-full cursor-pointer rounded-full bg-slate-200 dark:bg-slate-800">
+          Menu
+          <span class="inline-block size-4 align-text-top">
+            <MaterialSymbolsKeyboardArrowUpRounded v-if="isDropdownOpen" />
+            <MaterialSymbolsKeyboardArrowDownRounded v-else />
+          </span>
+        </button>
 
         <div v-if="isDropdownOpen" class="absolute top-9 left-0 flex w-full flex-col gap-1">
           <router-link
