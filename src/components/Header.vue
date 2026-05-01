@@ -42,7 +42,11 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
     </nav>
     <nav class="relative grow sm:hidden">
       <OnClickOutside @trigger="toggleDropdown(false)">
-        <button @click="toggleDropdown()" class="h-8 w-full cursor-pointer rounded-full bg-slate-200 dark:bg-slate-800">
+        <button
+          @click="toggleDropdown()"
+          class="h-8 w-full cursor-pointer bg-slate-200 dark:bg-slate-800"
+          :class="isDropdownOpen ? 'rounded-t-2xl border-2 border-slate-400 dark:border-slate-600' : 'rounded-full'"
+        >
           Menu
           <span class="inline-block size-4 align-text-top">
             <MaterialSymbolsKeyboardArrowUpRounded v-if="isDropdownOpen" />
@@ -50,7 +54,10 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
           </span>
         </button>
 
-        <div v-if="isDropdownOpen" class="absolute top-9 left-0 flex w-full flex-col gap-1">
+        <div
+          v-if="isDropdownOpen"
+          class="absolute top-8 left-0 flex w-full flex-col gap-1 rounded-b-2xl border-x-2 border-b-2 border-slate-400 bg-white p-1 dark:border-slate-600 dark:bg-gray-950"
+        >
           <router-link
             v-for="tab in tabs"
             :key="tab.route.name"
@@ -86,7 +93,7 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
 }
 
 .router-link-active.router-link-sm {
-  @apply bg-accent text-white;
+  @apply bg-accent;
 }
 
 .loading-bar::after {
