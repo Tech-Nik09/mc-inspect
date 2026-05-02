@@ -6,10 +6,6 @@
       <div class="text-center">
         <p>Welcome to MC-Inspect! A Minecraft player and server inspection web application.</p>
       </div>
-
-      <nav class="contents">
-        <a href="https://github.com/nkmLABS/mc-inspect" target="_self" class="btn-primary w-full">View project on GitHub</a>
-      </nav>
     </div>
   </section>
 
@@ -17,6 +13,9 @@
 
   <section class="mt-8 flex flex-col items-center gap-4 sm:mt-16">
     <h2 class="font-sans text-2xl font-bold">About the project</h2>
+    <div class="text-justify sm:text-center sm:text-balance">
+      <p>MC-Inspect lets you lookup various information about Minecraft players and servers.</p>
+    </div>
     <div>
       <p>This is a demo project of nkmLABS where you can lookup various information about Minecraft players and servers.</p>
     </div>
