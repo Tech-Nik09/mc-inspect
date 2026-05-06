@@ -5,14 +5,34 @@ import MdiLanguageTypescript from '~icons/mdi/language-typescript';
 import MdiTailwind from '~icons/mdi/tailwind';
 import MdiApi from '~icons/mdi/api';
 
-type Card = { label: string; text: string; icon: FunctionalComponent };
+type Card = { label: string; text: string; url: string; icon: FunctionalComponent };
 
-const cards: Card[] = [
-  { label: 'Vuejs', text: 'A modern JavaScript framework for building web application user interfaces.', icon: MdiVuejs },
-  { label: 'TypeScript', text: 'A JavaScript superset with full type safety and awesome tooling.', icon: MdiLanguageTypescript },
-  { label: 'Edge functions', text: 'A method of building fast and scalable backends in style of APIs.', icon: MdiApi },
-  { label: 'Tailwindcss', text: 'An intuitive utility-first CSS framework for building designs faster.', icon: MdiTailwind },
-] as const;
+const cards = [
+  {
+    label: 'Vuejs',
+    text: 'A modern JavaScript framework for building web application user interfaces.',
+    url: 'https://vuejs.org',
+    icon: MdiVuejs,
+  },
+  {
+    label: 'TypeScript',
+    text: 'A JavaScript superset with full type safety and awesome tooling.',
+    url: 'https://www.typescriptlang.org',
+    icon: MdiLanguageTypescript,
+  },
+  {
+    label: 'Cloudflare Workers',
+    text: 'A method of building fast and scalable backends in style of APIs.',
+    url: 'https://workers.cloudflare.com',
+    icon: MdiApi,
+  },
+  {
+    label: 'Tailwindcss',
+    text: 'An intuitive utility-first CSS framework for building designs faster.',
+    url: 'https://tailwindcss.com',
+    icon: MdiTailwind,
+  },
+] as const satisfies Card[];
 </script>
 
 <template>
@@ -36,9 +56,11 @@ const cards: Card[] = [
       Especially, I acquired knowledge of:
     </p>
     <div class="grid w-full max-w-3xl auto-rows-fr grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-      <div
+      <a
         v-for="card in cards"
         :key="card.label"
+        :href="card.url"
+        target="_blank"
         class="group flex flex-col gap-2 rounded-2xl border-2 border-accent p-4 hover-smooth hover:shadow-center-md hover:shadow-accent sm:gap-4 sm:p-8"
       >
         <div class="flex items-center gap-2 sm:gap-4">
@@ -48,7 +70,7 @@ const cards: Card[] = [
           <p class="font-sans text-xl font-bold hover-smooth group-hover:text-accent">{{ card.label }}</p>
         </div>
         <p>{{ card.text }}</p>
-      </div>
+      </a>
     </div>
   </section>
 </template>
