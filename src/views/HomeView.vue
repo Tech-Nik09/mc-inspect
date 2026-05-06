@@ -39,13 +39,11 @@ const cards: Card[] = [
       <div
         v-for="card in cards"
         :key="card.label"
-        class="group flex flex-col gap-2 rounded-2xl border-2 p-4 hover-smooth hover:border-accent hover:shadow-center-md hover:shadow-accent sm:gap-4 sm:p-8"
+        class="group flex flex-col gap-2 rounded-2xl border-2 border-accent p-4 hover-smooth hover:shadow-center-md hover:shadow-accent sm:gap-4 sm:p-8"
       >
         <div class="flex items-center gap-2 sm:gap-4">
-          <div
-            class="flex size-12 items-center justify-center rounded-2xl border-2 border-accent bg-accent/50 hover-smooth group-hover:bg-transparent"
-          >
-            <component :is="card.icon" class="size-8 hover-smooth group-hover:text-accent"></component>
+          <div class="flex size-12 items-center justify-center rounded-2xl border-2 border-accent">
+            <component :is="card.icon" class="size-8 text-accent transition-transform duration-400 ease-out group-hover:rotate-360"></component>
           </div>
           <p class="font-sans text-xl font-bold hover-smooth group-hover:text-accent">{{ card.label }}</p>
         </div>
