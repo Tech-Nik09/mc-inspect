@@ -7,7 +7,7 @@ import { downloadFileFromURL } from '@/utils/download';
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import type { FavoritePlayer } from '@/types';
+import type { Player, FavoritePlayer } from '@/types';
 const SkinView = defineAsyncComponent(() => import('@/components/SkinCanvas.vue'));
 
 const playerStore = usePlayerStore();
@@ -16,6 +16,17 @@ const { isLoading, data, query } = storeToRefs(playerStore);
 const route = useRoute();
 const router = useRouter();
 const currentLocation = computed<string>(() => window.location.origin + route.fullPath);
+
+type PlayerInfo = { label: string };
+
+const playerInfos = {
+  name: { label: 'Name' },
+  uuid: { label: 'UUID' },
+  skinId: { label: 'Skin ID' },
+  playerModel: { label: 'Playermodel' },
+  skinUrl: { label: 'Skin URL' },
+  capeUrl: { label: 'Cape URL' },
+} as const satisfies Record<keyof Player, PlayerInfo>;
 
 async function onQuery(): Promise<void> {
   const newRoute = await playerStore.fetchPlayer();
@@ -58,31 +69,19 @@ const currentPlayer = computed<FavoritePlayer | null>(() => {
 
     <section class="relative mt-8 flex flex-col items-center gap-4 sm:mt-16">
       <h2 class="font-sans text-2xl font-bold">{{ data.name }}</h2>
+
+      <div class="flex w-full">
+        <div>
+          <template v-for="(playerInfo, key) in playerInfos" :key>
+            <div v-if="data[key]">
+              {{ data[key] }}
+              <CopyButton :text="data[key]" :label="playerInfo.label" />
+            </div>
+          </template>
+        </div>
+
+        <SkinView />
+      </div>
     </section>
-
-    <h2>Fetched player data</h2>
-    <div>
-      <p>name: {{ data.name }}</p>
-      <CopyButton :text="data.name" label="Name" />
-
-      <p>uuid: {{ data.uuid }}</p>
-      <CopyButton :text="data.uuid" label="UUID" />
-
-      <p>skinId: {{ data.skinId }}</p>
-      <CopyButton :text="data.skinId" label="Skin ID" />
-
-      <p>playerModel: {{ data.playerModel }}</p>
-      <CopyButton :text="data.playerModel" label="Model" />
-
-      <p>skinUrl: {{ data.skinUrl }}</p>
-      <CopyButton :text="data.skinUrl" label="Skin URL" />
-
-      <template v-if="data.capeUrl">
-        <p>capeUrl: {{ data.capeUrl }}</p>
-        <CopyButton :text="data.capeUrl" label="Cape URL" />
-      </template>
-    </div>
-
-    <SkinView />
   </template>
 </template>
