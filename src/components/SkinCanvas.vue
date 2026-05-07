@@ -17,14 +17,14 @@ const showOuterLayer = ref(true);
 
 type EquipmentOptions = { [key: string]: { equipment: null | string; label: string } };
 const equipmentOptions = {
-  noEquipment: { equipment: null, label: 'No equipment' },
+  noEquipment: { equipment: null, label: 'None' },
   cape: { equipment: 'cape', label: 'Cape' },
   elytra: { equipment: 'elytra', label: 'Elytra' },
 } as const satisfies EquipmentOptions;
 
 type AnimationOptions = { [key: string]: { animation: null | PlayerAnimation; label: string } };
 const animationOptions = {
-  noAnimation: { animation: null, label: 'No animation' },
+  noAnimation: { animation: null, label: 'None' },
   idle: { animation: new IdleAnimation(), label: 'Idle' },
   walking: { animation: new WalkingAnimation(), label: 'Walk' },
   crouching: { animation: Object.assign(new CrouchAnimation(), { runOnce: true }), label: 'Crouch' },
@@ -94,33 +94,35 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="relative aspect-3/4 w-full max-w-lg rounded-2xl border-2 border-slate-400 dark:border-slate-600" ref="skinCanvasContainer">
-    <canvas ref="skinCanvas" class="absolute top-0 left-0"></canvas>
-  </div>
+  <div class="@container flex w-full max-w-md flex-col">
+    <div class="relative aspect-3/4" ref="skinCanvasContainer">
+      <canvas
+        ref="skinCanvas"
+        class="absolute top-0 left-0 rounded-2xl border-2 border-slate-400 bg-gray-200 dark:border-slate-600 dark:bg-gray-900"
+      ></canvas>
+    </div>
 
-  <div v-if="data?.capeUrl">
-    <label v-for="(option, key) in equipmentOptions" :key>
-      <input type="radio" :value="key" v-model="equipmentKey" />
-      {{ option.label }}
-    </label>
+    <div>
+      <div v-if="data?.capeUrl" class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-3">
+        <label v-for="(option, key) in equipmentOptions" :key :class="key === equipmentKey ? 'radio-primary' : 'btn-reverse'">
+          <input type="radio" :value="key" v-model="equipmentKey" class="hidden" />
+          {{ option.label }}
+        </label>
+      </div>
 
-    <p>Equipment type: {{ equipmentStyle }}</p>
-  </div>
+      <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-5">
+        <label v-for="(option, key) in animationOptions" :key :class="key === animationKey ? 'radio-primary' : 'btn-reverse'">
+          <input type="radio" :value="key" v-model="animationKey" class="hidden" />
+          {{ option.label }}
+        </label>
+      </div>
 
-  <div>
-    <label v-for="(option, key) in animationOptions" :key>
-      <input type="radio" :value="key" v-model="animationKey" />
-      {{ option.label }}
-    </label>
-
-    <p>Animation type: {{ animationStyle }}</p>
-  </div>
-
-  <div>
-    <label>
-      <input type="checkbox" v-model="showOuterLayer" />
-      Show outer layer
-    </label>
-    <p>Outer layer shown: {{ showOuterLayer }}</p>
+      <div>
+        <label :class="showOuterLayer ? 'radio-primary' : 'radio-reverse'" class="w-full">
+          <input type="checkbox" v-model="showOuterLayer" class="hidden" />
+          {{ showOuterLayer ? 'Hide outer layer' : 'Show outer layer' }}
+        </label>
+      </div>
+    </div>
   </div>
 </template>
