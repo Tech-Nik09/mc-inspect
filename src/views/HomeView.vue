@@ -7,32 +7,32 @@ import MdiApi from '~icons/mdi/api';
 
 type Card = { label: string; text: string; url: string; icon: FunctionalComponent };
 
-const cards = [
-  {
+const cards = {
+  vuejs: {
     label: 'Vuejs',
     text: 'A modern JavaScript framework for building web application user interfaces.',
     url: 'https://vuejs.org',
     icon: MdiVuejs,
   },
-  {
+  typescript: {
     label: 'TypeScript',
     text: 'A JavaScript superset with full type safety and awesome tooling.',
     url: 'https://www.typescriptlang.org',
     icon: MdiLanguageTypescript,
   },
-  {
+  cfWorkers: {
     label: 'Cloudflare Workers',
     text: 'A method of building fast and scalable backends in style of APIs.',
     url: 'https://workers.cloudflare.com',
     icon: MdiApi,
   },
-  {
+  tailwindcss: {
     label: 'Tailwindcss',
     text: 'An intuitive utility-first CSS framework for building designs faster.',
     url: 'https://tailwindcss.com',
     icon: MdiTailwind,
   },
-] as const satisfies Card[];
+} as const satisfies Record<string, Card>;
 </script>
 
 <template>
@@ -57,8 +57,8 @@ const cards = [
     </p>
     <div class="grid w-full max-w-3xl auto-rows-fr grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
       <a
-        v-for="card in cards"
-        :key="card.label"
+        v-for="(card, key) in cards"
+        :key
         :href="card.url"
         target="_blank"
         class="group flex flex-col gap-2 rounded-2xl border-2 border-accent p-4 hover-smooth hover:shadow-center-md hover:shadow-accent sm:gap-4 sm:p-8"
