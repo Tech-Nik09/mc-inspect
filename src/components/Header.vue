@@ -28,7 +28,7 @@ const [isDropdownOpen, toggleDropdown] = useToggle();
 
 <template>
   <header
-    class="sticky top-0 z-100 flex h-12 items-center gap-2 border-b-2 border-slate-400 px-2 font-sans font-bold backdrop-blur-md sm:h-16 sm:gap-4 sm:px-4 dark:border-slate-600"
+    class="sticky top-0 z-100 flex h-12 items-center gap-2 border-b-2 border-slate-400 bg-white px-2 font-sans font-bold sm:h-16 sm:gap-4 sm:px-4 dark:border-slate-600 dark:bg-gray-950"
     :class="{ 'loading-bar': isLoading }"
   >
     <nav class="hidden sm:contents">
