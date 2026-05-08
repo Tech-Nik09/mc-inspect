@@ -94,30 +94,46 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="@container flex w-full max-w-md flex-col">
-    <div class="relative aspect-3/4" ref="skinCanvasContainer">
+  <div class="@container flex w-full max-w-md flex-col gap-4 sm:max-w-xl">
+    <div class="relative aspect-3/4 sm:aspect-square" ref="skinCanvasContainer">
       <canvas
         ref="skinCanvas"
         class="absolute top-0 left-0 rounded-2xl border-2 border-slate-400 bg-gray-200 dark:border-slate-600 dark:bg-gray-900"
       ></canvas>
     </div>
 
-    <div>
-      <div v-if="data?.capeUrl" class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-3">
-        <label v-for="(option, key) in equipmentOptions" :key :class="key === equipmentKey ? 'radio-primary' : 'btn-reverse'">
-          <input type="radio" :value="key" v-model="equipmentKey" class="hidden" />
-          {{ option.label }}
-        </label>
-      </div>
+    <div class="flex flex-col gap-4 rounded-2xl border-2 border-slate-400 bg-gray-200 p-4 dark:border-slate-600 dark:bg-gray-900">
+      <template v-if="data?.capeUrl">
+        <div>
+          <p class="mb-2 text-center font-mono text-xl">Equipment</p>
 
-      <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-5">
-        <label v-for="(option, key) in animationOptions" :key :class="key === animationKey ? 'radio-primary' : 'btn-reverse'">
-          <input type="radio" :value="key" v-model="animationKey" class="hidden" />
-          {{ option.label }}
-        </label>
-      </div>
+          <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-3">
+            <label v-for="(option, key) in equipmentOptions" :key :class="key === equipmentKey ? 'radio-primary' : 'btn-reverse'">
+              <input type="radio" :value="key" v-model="equipmentKey" class="hidden" />
+              {{ option.label }}
+            </label>
+          </div>
+        </div>
+
+        <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />
+      </template>
 
       <div>
+        <p class="mb-2 text-center font-mono text-xl">Animation</p>
+
+        <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-5">
+          <label v-for="(option, key) in animationOptions" :key :class="key === animationKey ? 'radio-primary' : 'btn-reverse'">
+            <input type="radio" :value="key" v-model="animationKey" class="hidden" />
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+
+      <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />
+
+      <div>
+        <p class="mb-2 text-center font-mono text-xl">Outer layer</p>
+
         <label :class="showOuterLayer ? 'radio-primary' : 'radio-reverse'" class="w-full">
           <input type="checkbox" v-model="showOuterLayer" class="hidden" />
           {{ showOuterLayer ? 'Hide outer layer' : 'Show outer layer' }}
