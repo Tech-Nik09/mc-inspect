@@ -31,12 +31,10 @@ async function onQuery(): Promise<void> {
   <hr class="h-0.5 w-full bg-slate-400 text-slate-400 dark:bg-slate-600 dark:text-slate-600" />
 
   <section class="relative mt-8 flex flex-col items-center gap-4 sm:mt-16">
-    <div class="text-center">
-      <h2 class="font-sans text-2xl font-bold">Favorites</h2>
-      <p v-if="favoritePlayers.length" class="inline rounded-sm bg-slate-200 px-1 sm:absolute sm:top-1 sm:right-0 dark:bg-slate-800">
-        {{ favoritePlayers.length }}/{{ maxFavoritePlayers }}
-      </p>
-    </div>
+    <h2 class="font-sans text-2xl font-bold">Favorites</h2>
+    <p v-if="favoritePlayers.length" class="inline rounded-sm bg-slate-200 px-1 sm:absolute sm:top-1 sm:right-0 dark:bg-slate-800">
+      {{ favoritePlayers.length }}/{{ maxFavoritePlayers }}
+    </p>
 
     <div v-if="favoritePlayers.length" class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] sm:gap-4">
       <PlayerFavoriteCard v-for="favorite in favoritePlayers" :key="favorite.meta.id" :favorite />

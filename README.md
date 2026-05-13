@@ -4,7 +4,8 @@ A work in progress Minecraft player and server inspection web application.
 
 ## Please notice
 
-1. This project is not affiliated with Mojang in any way.
+1. This project is not associated with Mojang in any way.  
+   `NOT AN OFFICIAL MINECRAFT [PRODUCT/SERVICE/EVENT/etc.]. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT`
 2. This project is licensed under the MIT license.
 3. There is no full release yet, since the project is currently in early developement.
 
