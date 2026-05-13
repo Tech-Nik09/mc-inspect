@@ -94,7 +94,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="@container flex w-full max-w-md flex-col gap-4 sm:max-w-xl">
+  <div class="flex w-full max-w-lg flex-col gap-4 sm:w-xl sm:max-w-xl sm:min-w-xl">
     <div class="relative aspect-3/4 sm:aspect-square" ref="skinCanvasContainer">
       <canvas
         ref="skinCanvas"
@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
         <div>
           <p class="mb-2 text-center font-mono text-xl">Equipment</p>
 
-          <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-3">
+          <div class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-3">
             <label v-for="(option, key) in equipmentOptions" :key :class="key === equipmentKey ? 'radio-primary' : 'btn-reverse'">
               <input type="radio" :value="key" v-model="equipmentKey" class="hidden" />
               {{ option.label }}
@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
       <div>
         <p class="mb-2 text-center font-mono text-xl">Animation</p>
 
-        <div class="flex w-full flex-col gap-2 @md:grid @md:grid-cols-5">
+        <div class="flex w-full flex-col gap-2 sm:grid sm:grid-cols-5">
           <label v-for="(option, key) in animationOptions" :key :class="key === animationKey ? 'radio-primary' : 'btn-reverse'">
             <input type="radio" :value="key" v-model="animationKey" class="hidden" />
             {{ option.label }}
