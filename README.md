@@ -2,6 +2,11 @@
 
 A work in progress Minecraft player and server inspection web application.
 
+## General / about
+
+MC-Inspect lets you lookup various information about Minecraft players and servers. It is developed by nkmLABS as a learning exercise and now deployed as demo project for you to use. I (nkmLABS) build this web application to understand how to use different web technologies and tools.  
+Especially, I acquired knowledge of: Vuejs, TypeScript, Cloudflare Workers, Tailwindcss.
+
 ## Please notice
 
 1. This project is not associated with Mojang in any way.  
